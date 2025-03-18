@@ -67,6 +67,9 @@ export default function SpendingsForm() {
         totalAmount: editingExpense.totalAmount || 0,
       });
       setDate(new Date(editingExpense.dateSpent));
+    } else {
+      reset({ dateSpent: new Date().toISOString() });
+      setDate(new Date());
     }
   }, [editingExpense, reset]);
 
