@@ -1,15 +1,24 @@
+import SummaryCard from "@/components/dashboard/SummaryCard";
 import SpendingsForm from "../components/spendings/SpendingsForm";
 import SpendingsList from "../components/spendings/SpendingsList";
-import useEditStore from "@/hooks/useEditStore";
 
 export default function SpendingsPage() {
-
-  const { editingExpense } = useEditStore();
-
   return (
-    <div className="flex flex-col gap-y-12 px-8 py-4 pb-8 w-full">
-      <SpendingsForm editingExpense={editingExpense}></SpendingsForm>
-      <SpendingsList></SpendingsList>
+    <div className="flex flex-col lg:flex-row gap-8 p-8">
+      <div className="flex flex-col gap-8">
+        <div className="flex gap-x-8">
+          <SummaryCard
+            value={`$${3000}`}
+            percentage={80}
+            description="Percentage of pay that are used for expenses"
+          />
+          <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
+          <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
+        </div>
+        <SpendingsForm />
+      </div>
+      <div className="w-full h-screen p-8 rounded-md bg-slate-800">Add latest spendings here</div>
+      {/* <SpendingsList></SpendingsList> */}
     </div>
   );
 }

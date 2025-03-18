@@ -6,7 +6,7 @@ export default function DashboardLayout() {
   return (
     <div className="flex flex-col">
       <DashboardHeader />
-      <main className="min-h-screen bg-black">
+      <main className="min-h-screen bg-black text-white">
         <PageTransition>
           <Outlet />
         </PageTransition>
