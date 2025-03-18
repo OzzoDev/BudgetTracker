@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import useDataStore from "@/hooks/useDataStore";
 import { useEffect, useState } from "react";
 import PrimaryBtn from "../btn/PrimaryBtn";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   spendingCategory: z.string().nonempty("Spending category is required").min(2, {
@@ -70,13 +71,19 @@ export default function SpendingsForm() {
   }, [editingExpense, reset]);
 
   function onSubmit(data) {
-    console.log("Data: ", data);
+    const formattedData = { ...data, dateSpent: data.dateSpent.split("T")[0] };
 
     if (editingExpense) {
-      editExpense({ ...data, id: editingExpense.id });
+      editExpense({ ...formattedData, id: editingExpense.id });
       updateEditingExpense(undefined);
+      toast("Expense edited notification", {
+        description: `Expense "${formattedData.spendingCategory}, $${formattedData.totalAmount}, ${formattedData.dateSpent} edited successfully"`,
+      });
     } else {
-      addExpense(data);
+      addExpense(formattedData);
+      toast("Expense added notification", {
+        description: "Expense added to spending records successfully",
+      });
     }
     reset({
       spendingCategory: "",
@@ -92,9 +99,9 @@ export default function SpendingsForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-y-24 p-8 rounded-md bg-slate-800">
         <div className="flex justify-between w-full">
-          <h1 className="text-2xl text-gray-300">Add new expense</h1>
+          <h2 className="text-2xl text-gray-300">Add new expense</h2>
         </div>
-        <div className="flex gap-16 justify-between px-12">
+        <div className="flex flex-col-reverse md:flex-row items-center gap-16 justify-between px-12">
           <div className="flex flex-col gap-y-16 w-full">
             <FormField
               control={control}
@@ -128,7 +135,7 @@ export default function SpendingsForm() {
               name="totalAmount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Total Spending Amount</FormLabel>
+                  <FormLabel>Amount spent</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -144,23 +151,25 @@ export default function SpendingsForm() {
                 </FormItem>
               )}
             />
-            <PrimaryBtn type="submit" fullWidth={false}>
-              {editingExpense ? "Update expense" : "Add expense"}
-            </PrimaryBtn>
+            <div className="self-center md:self-stretch">
+              <PrimaryBtn type="submit" fullWidth={false}>
+                {editingExpense ? "Update expense" : "Add expense"}
+              </PrimaryBtn>
+            </div>
           </div>
           <FormField
             control={control}
             name="dateSpent"
             render={() => (
               <FormItem>
-                <FormLabel>Date Spent</FormLabel>
+                <FormLabel>Date of expense</FormLabel>
                 <Calendar
                   animate
                   mode="single"
                   selected={date}
                   onSelect={(selectedDate) => {
                     setDate(selectedDate);
-                    form.setValue("dateSpent", selectedDate.toISOString().split("T")[0]);
+                    form.setValue("dateSpent", selectedDate.toLocaleDateString("en-CA"));
                   }}
                   className="self-center p-0 h-[300px]"
                 />

@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import PageTransition from "../animations/PageTransition";
 import DashboardHeader from "./DashboardHeader";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function DashboardLayout() {
   return (
@@ -10,6 +11,7 @@ export default function DashboardLayout() {
         <PageTransition>
           <Outlet />
         </PageTransition>
+        <Toaster className="bg-black" />
       </main>
     </div>
   );

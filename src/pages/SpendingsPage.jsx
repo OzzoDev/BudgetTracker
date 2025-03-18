@@ -16,9 +16,9 @@ export default function SpendingsPage() {
           <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
         </div>
         <SpendingsForm />
+        <SpendingsList />
       </div>
       <div className="w-full h-screen p-8 rounded-md bg-slate-800">Add latest spendings here</div>
-      {/* <SpendingsList></SpendingsList> */}
     </div>
   );
 }
