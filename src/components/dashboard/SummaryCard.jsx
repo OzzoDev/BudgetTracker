@@ -7,7 +7,7 @@ export default function SummaryCard({ value, percentage, description }) {
   return (
     <div className="flex flex-col gap-y-4 p-6 rounded-md min-w-[380px] lg:min-w-0 w-full h-full bg-slate-800">
       <div className="flex justify-between gap-4">
-        <div className="flex items-end gap-x-2">
+        <div className="flex flex-col">
           <p className="text-xl text-white font-medium">{value}</p>
           <p
             className={`text-sm mb-1 whitespace-nowarp ${

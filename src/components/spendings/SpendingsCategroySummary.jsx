@@ -70,7 +70,7 @@ export default function SpendingsCategroySummary() {
         <p className="text-xl text-gray-400">No expenses added</p>
       )}
       <p className="text-xl text-gray-400 my-12">Categorized spending totals</p>
-      <ul className="flex flex-col gap-y-12 pb-8 overflow-y-auto">
+      <ul className="flex flex-col gap-y-12 pb-8 max-h-[800px] overflow-y-auto">
         {sortedSums.map((category, index) => {
           return (
             <div key={category.category + index} className="flex flex-col gap-y-4 px-4">

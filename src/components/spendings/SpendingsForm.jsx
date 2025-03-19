@@ -100,7 +100,7 @@ export default function SpendingsForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-24 p-8 rounded-md bg-slate-800">
+        className="flex flex-col gap-y-24 p-8 h-full rounded-md bg-slate-800">
         <div className="flex justify-between w-full">
           <h2 className="text-2xl text-gray-300">Add new expense</h2>
         </div>
