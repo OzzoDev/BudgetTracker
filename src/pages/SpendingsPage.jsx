@@ -1,6 +1,7 @@
 import SummaryCard from "@/components/dashboard/SummaryCard";
 import SpendingsForm from "../components/spendings/SpendingsForm";
 import SpendingsList from "../components/spendings/SpendingsList";
+import SpendingsRecord from "@/components/spendings/SpendingsRecord";
 
 export default function SpendingsPage() {
   return (
@@ -16,9 +17,11 @@ export default function SpendingsPage() {
           <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
         </div>
         <SpendingsForm />
-        <SpendingsList />
+        <SpendingsRecord />
       </div>
-      <div className="w-full h-screen p-8 rounded-md bg-slate-800">Add latest spendings here</div>
+      <div className="w-full min-h-screen p-8 rounded-md bg-slate-800">
+        Add latest spendings here
+      </div>
     </div>
   );
 }
