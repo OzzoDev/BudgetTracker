@@ -31,10 +31,10 @@ const formSchema = z.object({
 });
 
 export default function CategoryForm() {
-  const { addCategory, editCategory } = useDataStore();
+  const { categories, addCategory, editCategory } = useDataStore();
   const { editingCategory, updateEditingCategory } = useEditStore();
 
-  const form = useForm({
+  const formMethods = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       category: "",
@@ -43,7 +43,8 @@ export default function CategoryForm() {
     },
   });
 
-  const { register, reset } = form;
+  const { setError, reset } = formMethods;
+
   useEffect(() => {
     if (editingCategory) {
       reset(editingCategory);
@@ -51,7 +52,17 @@ export default function CategoryForm() {
   }, [editingCategory, reset]);
 
   function onSubmit(data) {
-    console.log("Form data: ", data);
+    const isDuplicateCategory = categories.some(
+      (category) => category.category.trim().toLowerCase() === data.category.trim().toLowerCase()
+    );
+
+    if (isDuplicateCategory) {
+      setError("category", {
+        type: "manual",
+        message: "Category alreday exists",
+      });
+      return;
+    }
 
     if (editingCategory) {
       editCategory({ ...data, id: editingCategory.id });
@@ -59,6 +70,7 @@ export default function CategoryForm() {
     } else {
       addCategory(data);
     }
+
     reset({
       category: "",
       color: "#000000",
@@ -67,16 +79,16 @@ export default function CategoryForm() {
   }
 
   return (
-    <FormProvider {...form}>
+    <FormProvider {...formMethods}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={formMethods.handleSubmit(onSubmit)}
         className="flex flex-col gap-y-24 p-8 h-full rounded-md bg-slate-800">
         <div className="flex justify-between w-full">
           <h2 className="text-2xl text-gray-300">Create new category</h2>
         </div>
         <div className="flex flex-col items-start gap-y-16 px-12">
           <FormField
-            control={form.control}
+            control={formMethods.control}
             name="category"
             render={({ field }) => (
               <FormItem>
@@ -85,6 +97,8 @@ export default function CategoryForm() {
                   <Input
                     minLength={3}
                     maxLength={25}
+                    autoComplete="off"
+                    spellCheck="false"
                     placeholder="Category"
                     value={field.value} // Set the value from the form state
                     onChange={(e) => {
@@ -101,7 +115,7 @@ export default function CategoryForm() {
             )}
           />
           <FormField
-            control={form.control}
+            control={formMethods.control}
             name="color"
             render={({ field }) => (
               <FormItem>
