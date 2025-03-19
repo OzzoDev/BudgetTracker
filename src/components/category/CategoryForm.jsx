@@ -20,6 +20,7 @@ import useDataStore from "@/hooks/useDataStore";
 import useEditStore from "@/hooks/useEditStore";
 import PrimaryBtn from "../btn/PrimaryBtn";
 import { capitalize } from "@/utils/helpers";
+import { toast } from "sonner";
 const formSchema = z.object({
   category: z
     .string()
@@ -69,8 +70,14 @@ export default function CategoryForm() {
     if (editingCategory) {
       editCategory({ ...data, id: editingCategory.id });
       updateEditingCategory(undefined);
+      toast("Category edited notification", {
+        description: `Category "${data.category}" updated successfully`,
+      });
     } else {
       addCategory(data);
+      toast("Category created notification", {
+        description: `Category "${data.category}" created successfully`,
+      });
     }
 
     reset({

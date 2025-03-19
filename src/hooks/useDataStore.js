@@ -7,9 +7,14 @@ import useEditStore from "./useEditStore";
 const useDataStore = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.data);
-  const { updateEditingExpense, editingExpense,
-    editingCategory, updateEditingCategory, 
-    editingGoal, updateEditingGoal  } = useEditStore();
+  const {
+    updateEditingExpense,
+    editingExpense,
+    editingCategory,
+    updateEditingCategory,
+    editingGoal,
+    updateEditingGoal,
+  } = useEditStore();
 
   const updatePay = useCallback(
     (pay) => {
@@ -44,12 +49,11 @@ const useDataStore = () => {
     (expenseId) => {
       const filteredExpenses = [...dataState.expenses].filter((exp) => exp.id !== expenseId);
 
-      if(editingExpense && expenseId == editingExpense.id){
+      if (editingExpense && expenseId == editingExpense.id) {
         updateEditingExpense(undefined);
       }
-      
-      dispatch(setExpenses(filteredExpenses));
 
+      dispatch(setExpenses(filteredExpenses));
     },
     [dispatch, dataState, editingExpense]
   );
@@ -85,7 +89,7 @@ const useDataStore = () => {
     (goalId) => {
       const filteredGoals = [...dataState.goals].filter((goa) => goa.id !== goalId);
 
-      if(editingGoal && goalId == editingGoal.id){
+      if (editingGoal && goalId == editingGoal.id) {
         updateEditingGoal(undefined);
       }
 
@@ -108,7 +112,6 @@ const useDataStore = () => {
 
   const editCategory = useCallback(
     (editedCategory) => {
-      console.log(editedCategory)
       const updatedCategories = [...dataState.categories].map((cat) =>
         editedCategory.id === cat.id ? editedCategory : cat
       );
@@ -121,7 +124,7 @@ const useDataStore = () => {
     (categoryId) => {
       const filteredCategories = [...dataState.categories].filter((cat) => cat.id !== categoryId);
 
-      if(editingCategory && categoryId == editingCategory.id){
+      if (editingCategory && categoryId == editingCategory.id) {
         updateEditingCategory(undefined);
       }
 
