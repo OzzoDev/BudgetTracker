@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DefaultBtn from "../btn/DefaultBtn";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import {
@@ -11,7 +11,13 @@ import {
 import useDataStore from "@/hooks/useDataStore";
 
 export default function SpendingsFilters({ expenses, setExpenses }) {
-  const { categories } = useDataStore();
+  const { categories, expenses: rootExpenses } = useDataStore();
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    sortByCategory(null);
+    setSelectedCategory(null);
+  }, [rootExpenses]);
 
   const sortByExpensive = () => {
     const sortedExpenses = [...expenses].sort((a, b) => b.totalAmount - a.totalAmount);
@@ -23,11 +29,13 @@ export default function SpendingsFilters({ expenses, setExpenses }) {
     setExpenses(sortedExpenses);
   };
 
-  const sortByCategory = (selectedCategory) => {
+  const sortByCategory = (category) => {
     const filteredExpenses = [...expenses].filter((expense) =>
-      !selectedCategory ? true : expense.spendingCategory === selectedCategory
+      !category ? true : expense.spendingCategory === category
     );
+
     setExpenses(filteredExpenses);
+    setSelectedCategory(category);
   };
 
   return (
@@ -52,7 +60,7 @@ export default function SpendingsFilters({ expenses, setExpenses }) {
             </div>
           </DefaultBtn>
         </div>
-        <Select onValueChange={(value) => sortByCategory(value)}>
+        <Select value={selectedCategory} onValueChange={(value) => sortByCategory(value)}>
           <SelectTrigger className="bg-transparent">
             <SelectValue placeholder="Filter by category" />
           </SelectTrigger>

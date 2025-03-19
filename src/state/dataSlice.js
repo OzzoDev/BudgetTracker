@@ -38,10 +38,13 @@ const dataSlice = createSlice({
       state.categories = action.payload;
       localStorage.setItem(DATA_KEY, JSON.stringify(state));
     },
+    setMany: (state, action) => {
+      Object.assign(state, action.payload);
+      localStorage.setItem(DATA_KEY, JSON.stringify(state));
+    },
   },
 });
 
-export const { setPay, setExpenses, setGoals, setCategories } =
-  dataSlice.actions;
+export const { setPay, setExpenses, setGoals, setCategories, setMany } = dataSlice.actions;
 
 export default dataSlice.reducer;

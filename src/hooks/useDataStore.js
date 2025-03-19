@@ -1,4 +1,4 @@
-import { setCategories, setExpenses, setGoals, setPay } from "@/state/dataSlice";
+import { setCategories, setExpenses, setGoals, setPay, setMany } from "@/state/dataSlice";
 import { generateID } from "@/utils/helpers";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -115,7 +115,20 @@ const useDataStore = () => {
       const updatedCategories = [...dataState.categories].map((cat) =>
         editedCategory.id === cat.id ? editedCategory : cat
       );
-      dispatch(setCategories(updatedCategories));
+
+      const prevCategory = [...dataState.categories].find(
+        (cat) => editedCategory.id === cat.id
+      ).category;
+
+      const updatedExpenses = [...dataState.expenses].map((exp) => {
+        return {
+          ...exp,
+          spendingCategory:
+            exp.spendingCategory === prevCategory ? editedCategory.category : exp.spendingCategory,
+        };
+      });
+
+      dispatch(setMany({ categories: updatedCategories, expenses: updatedExpenses }));
     },
     [dispatch, dataState]
   );
@@ -124,11 +137,19 @@ const useDataStore = () => {
     (categoryId) => {
       const filteredCategories = [...dataState.categories].filter((cat) => cat.id !== categoryId);
 
+      const categoryToDelete = [...dataState.categories].find(
+        (cat) => cat.id === categoryId
+      ).category;
+
+      const filteredExpenses = [...dataState.expenses].filter(
+        (exp) => exp.spendingCategory !== categoryToDelete
+      );
+
       if (editingCategory && categoryId == editingCategory.id) {
         updateEditingCategory(undefined);
       }
 
-      dispatch(setCategories(filteredCategories));
+      dispatch(setMany({ categories: filteredCategories, expenses: filteredExpenses }));
     },
     [dispatch, dataState, editingCategory]
   );
