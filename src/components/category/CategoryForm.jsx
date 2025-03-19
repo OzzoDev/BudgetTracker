@@ -52,16 +52,18 @@ export default function CategoryForm() {
   }, [editingCategory, reset]);
 
   function onSubmit(data) {
-    const isDuplicateCategory = categories.some(
+    const duplicateCategory = categories.find(
       (category) => category.category.trim().toLowerCase() === data.category.trim().toLowerCase()
     );
 
-    if (isDuplicateCategory) {
-      setError("category", {
-        type: "manual",
-        message: "Category alreday exists",
-      });
-      return;
+    if (duplicateCategory) {
+      if (editingCategory.id !== duplicateCategory.id || !editingCategory) {
+        setError("category", {
+          type: "manual",
+          message: "Category alreday exists",
+        });
+        return;
+      }
     }
 
     if (editingCategory) {
@@ -100,10 +102,10 @@ export default function CategoryForm() {
                     autoComplete="off"
                     spellCheck="false"
                     placeholder="Category"
-                    value={field.value} // Set the value from the form state
+                    value={field.value}
                     onChange={(e) => {
                       const capitalizedValue = capitalize(e.target.value);
-                      field.onChange(capitalizedValue); // Update form state with capitalized value
+                      field.onChange(capitalizedValue);
                     }}
                   />
                 </FormControl>

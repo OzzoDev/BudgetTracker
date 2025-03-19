@@ -2,7 +2,7 @@ import useDataStore from "@/hooks/useDataStore";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 
 export default function SpendingsCategroySummary() {
-  const { expenses } = useDataStore();
+  const { categories, expenses } = useDataStore();
 
   const categorizedSums = expenses.reduce((acc, expense) => {
     const { spendingCategory, totalAmount } = expense;
@@ -37,20 +37,30 @@ export default function SpendingsCategroySummary() {
     return amout <= averageAmout ? true : false;
   };
 
+  const getCategoryColor = (category) => {
+    return categories.find((cat) => cat.category === category)?.color;
+  };
+
   return (
     <div className="flex flex-col w-full h-full p-8 rounded-md overflow-hidden bg-slate-800">
       {!noExpenses ? (
         <div className="flex flex-col gap-y-10">
           {mostExpensiveCategory && (
-            <div className="flex flex-col gap-y-2 p-4 pb-8 rounded-md shadow-xl">
+            <div className="p-4 pb-8 rounded-md shadow-xl">
               <div className="flex justify-between mb-4">
                 <p className="text-lg text-red-500">Highest spending category</p>
                 <div className="p-2 rounded-md bg-gray-900 bg-opacity-40">
                   <GoArrowUp size={24} color="red" />
                 </div>
               </div>
-              <p className="text-gray-400 font-medium">{mostExpensiveCategory.category}</p>
-              <p>${mostExpensiveCategory.amount}</p>
+              <div className="w-fit flex flex-col gap-y-2">
+                <div
+                  style={{ backgroundColor: getCategoryColor(mostExpensiveCategory.category) }}
+                  className="h-2 w-full rounded-full shadow-md"
+                />
+                <p className="text-gray-400 font-medium">{mostExpensiveCategory.category}</p>
+                <p>${mostExpensiveCategory.amount}</p>
+              </div>
             </div>
           )}
           {cheapestCategory && (
@@ -61,20 +71,32 @@ export default function SpendingsCategroySummary() {
                   <GoArrowDown size={24} color="green" />
                 </div>
               </div>
-              <p className="text-gray-400 font-medium">{cheapestCategory.category}</p>
-              <p>${cheapestCategory.amount}</p>
+              <div className="w-fit flex flex-col gap-y-2">
+                <div
+                  style={{ backgroundColor: getCategoryColor(cheapestCategory.category) }}
+                  className="h-2 w-full rounded-full shadow-md"
+                />
+                <p className="text-gray-400 font-medium">{cheapestCategory.category}</p>
+                <p>${cheapestCategory.amount}</p>
+              </div>
             </div>
           )}
         </div>
       ) : (
-        <p className="text-xl text-gray-400">No expenses added</p>
+        <p className="text-xl text-gray-400">You currently have no expenses</p>
       )}
-      <p className="text-xl text-gray-400 my-12">Categorized spending totals</p>
+      {!noExpenses && <p className="text-xl text-gray-400 my-12">Categorized spending totals</p>}
       <ul className="flex flex-col gap-y-12 pb-8 max-h-[800px] overflow-y-auto">
         {sortedSums.map((category, index) => {
           return (
             <div key={category.category + index} className="flex flex-col gap-y-4 px-4">
-              <p className="text-lg text-gray-400 font-medium">{category.category}</p>
+              <div className="flex items-center gap-x-2">
+                <div
+                  style={{ backgroundColor: getCategoryColor(category.category) }}
+                  className="h-3 w-3 rounded-full shadow-md"
+                />
+                <p className="text-lg text-gray-400 font-medium">{category.category}</p>
+              </div>
               <div className="flex flex-col gap-y-1 px-4">
                 <p>${category.amount}</p>
                 <p

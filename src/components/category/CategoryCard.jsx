@@ -18,8 +18,11 @@ export default function CategoryCard({ category }) {
   };
 
   return (
-    <div className="flex flex-col gap-y-4 p-4 w-[200px] rounded-sm bg-slate-700">
-      <div style={{ backgroundColor: category.color }} className="h-2 w-full rounded-full" />
+    <div className="flex flex-col gap-y-4 p-4 w-[200px] rounded-sm bg-slate-900 bg-opacity-50">
+      <div
+        style={{ backgroundColor: category.color }}
+        className="h-2 w-full rounded-full shadow-md"
+      />
       <p>{category.category}</p>
       <div className="flex justify-end gap-x-4 w-full">
         <DefaultBtn onClick={() => updateEditingCategory(category)}>

@@ -38,7 +38,7 @@ const formSchema = z.object({
 });
 
 export default function SpendingsForm() {
-  const { addExpense, editExpense } = useDataStore();
+  const { categories, addExpense, editExpense } = useDataStore();
   const { editingExpense, updateEditingExpense } = useEditStore();
 
   const [date, setDate] = useState(new Date());
@@ -121,9 +121,13 @@ export default function SpendingsForm() {
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent className="text-white border-transparent bg-slate-800">
-                      <SelectItem value="food">Food</SelectItem>
-                      <SelectItem value="transport">Transport</SelectItem>
-                      <SelectItem value="entertainment">Entertainment</SelectItem>
+                      {categories.map((category) => {
+                        return (
+                          <SelectItem key={category.id} value={category.category}>
+                            {category.category}
+                          </SelectItem>
+                        );
+                      })}
                     </SelectContent>
                   </Select>
                   <FormMessage className="text-red-500">
@@ -144,6 +148,8 @@ export default function SpendingsForm() {
                       type="number"
                       placeholder="60$"
                       value={field.value || ""}
+                      autoComplete="off"
+                      spellCheck="false"
                       onChange={(e) => {
                         const value = e.target.value;
                         field.onChange(value ? parseFloat(value) : 0);

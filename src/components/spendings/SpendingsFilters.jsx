@@ -8,8 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useDataStore from "@/hooks/useDataStore";
 
 export default function SpendingsFilters({ expenses, setExpenses }) {
+  const { categories } = useDataStore();
+
   const sortByExpensive = () => {
     const sortedExpenses = [...expenses].sort((a, b) => b.totalAmount - a.totalAmount);
     setExpenses(sortedExpenses);
@@ -55,9 +58,13 @@ export default function SpendingsFilters({ expenses, setExpenses }) {
           </SelectTrigger>
           <SelectContent className="text-white border-transparent bg-slate-800">
             <SelectItem value={null}>Every category</SelectItem>
-            <SelectItem value="food">Food</SelectItem>
-            <SelectItem value="transport">Transport</SelectItem>
-            <SelectItem value="entertainment">Entertainment</SelectItem>
+            {categories.map((category) => {
+              return (
+                <SelectItem key={category.id} value={category.category}>
+                  {category.category}
+                </SelectItem>
+              );
+            })}
           </SelectContent>
         </Select>
       </div>
