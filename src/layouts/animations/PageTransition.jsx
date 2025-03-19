@@ -11,8 +11,7 @@ export default function PageTransition({ children }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0.2 }}
       transition={{ duration: 0.5 }}
-      className="flex-grow flex flex-col w-full"
-    >
+      className="flex-grow flex flex-col w-full h-full">
       {children}
     </motion.div>
   );

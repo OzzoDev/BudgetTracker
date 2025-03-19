@@ -31,7 +31,7 @@ export default function SpendingsList({ expenses }) {
     <>
       {!noExpenses ? (
         <>
-          <div className="px-12">
+          <div className="lg:px-12">
             <Table>
               <TableHeader>
                 <TableRow className="transition-all duration-300 ease hover:bg-gray-900 bg-opacity-40!">

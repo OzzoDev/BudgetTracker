@@ -5,11 +5,14 @@ export default function SummaryCard({ value, percentage, description }) {
   const isFavorable = percentage < 100;
 
   return (
-    <div className="flex flex-col gap-y-4 p-6 rounded-md w-[300px] bg-slate-800">
-      <div className="flex justify-between">
+    <div className="flex flex-col gap-y-4 p-6 rounded-md min-w-[380px] lg:min-w-0 w-full h-full bg-slate-800">
+      <div className="flex justify-between gap-4">
         <div className="flex items-end gap-x-2">
           <p className="text-xl text-white font-medium">{value}</p>
-          <p className={`text-sm mb-1 ${isFavorable ? "text-green-500" : "text-red-500"}`}>
+          <p
+            className={`text-sm mb-1 whitespace-nowarp ${
+              isFavorable ? "text-green-500" : "text-red-500"
+            }`}>
             {isFavorable ? percentage + "% remaining" : percentage - 100 + "% overload"}
           </p>
         </div>

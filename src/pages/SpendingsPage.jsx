@@ -1,26 +1,41 @@
 import SummaryCard from "@/components/dashboard/SummaryCard";
 import SpendingsForm from "../components/spendings/SpendingsForm";
-import SpendingsList from "../components/spendings/SpendingsList";
 import SpendingsRecord from "@/components/spendings/SpendingsRecord";
+import SpendingsCategroySummary from "@/components/spendings/SpendingsCategroySummary";
 
 export default function SpendingsPage() {
   return (
-    <div className="flex flex-col lg:flex-row gap-8 p-8">
-      <div className="flex flex-col gap-8">
-        <div className="flex gap-x-8">
-          <SummaryCard
-            value={`$${3000}`}
-            percentage={80}
-            description="Percentage of pay that are used for expenses"
-          />
-          <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
-          <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
-        </div>
+    <div className="flex flex-col lg:grid lg:grid-cols-[repeat(14,1fr)] lg:grid-rows-[repeat(12,1fr)] gap-8 lg:h-screen p-8">
+      <div className="lg:hidden grid grid-cols-[repeat(3,1fr)] gap-8 overflow-x-auto">
+        <SummaryCard
+          value={`$${3000}`}
+          percentage={80}
+          description="Percentage of pay that are used for expenses"
+        />
+        <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
+        <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
+      </div>
+      <div className="hidden lg:block col-span-3 col-start-1 row-span-1">
+        <SummaryCard
+          value={`$${3000}`}
+          percentage={80}
+          description="Percentage of pay that are used for expenses"
+        />
+      </div>
+      <div className="hidden lg:block col-span-3 col-start-4 row-span-1">
+        <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
+      </div>
+      <div className="hidden lg:block col-span-3 col-start-7 row-span-1">
+        <SummaryCard value={`${5}`} percentage={120} description="Total categories used" />
+      </div>
+      <div className="lg:row-start-2 lg:col-start-1 lg:col-span-9 lg:row-span-6">
         <SpendingsForm />
+      </div>
+      <div className="lg:row-start-7 lg:col-start-1 lg:col-span-9 lg:row-span-6">
         <SpendingsRecord />
       </div>
-      <div className="w-full min-h-screen p-8 rounded-md bg-slate-800">
-        Add latest spendings here
+      <div className="col-span-5 row-start-1 row-span-12">
+        <SpendingsCategroySummary />
       </div>
     </div>
   );

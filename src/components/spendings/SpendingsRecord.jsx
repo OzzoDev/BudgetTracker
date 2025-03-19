@@ -19,7 +19,7 @@ export default function SpendingsRecord() {
       <SpendingsFilters expenses={expenses} setExpenses={setFilteredExpenses} />
       <SpendingsList expenses={pagintedExpenses} />
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <Paginator items={filteredExpenses} maxItems={3} setItems={setPagintedExpenses} />
+        <Paginator items={filteredExpenses} maxItems={8} setItems={setPagintedExpenses} />
       </div>
     </div>
   );

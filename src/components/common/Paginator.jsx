@@ -13,8 +13,6 @@ export default function Paginator({ items, maxItems, setItems, paginateTrigger }
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    console.log("Hello", items.slice((currentPage - 1) * maxItems, currentPage * maxItems));
-
     setItems(items.slice((currentPage - 1) * maxItems, currentPage * maxItems));
     setCurrentPage(1);
   }, [items, maxItems, setItems, paginateTrigger]);

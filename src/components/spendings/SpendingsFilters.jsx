@@ -30,7 +30,7 @@ export default function SpendingsFilters({ expenses, setExpenses }) {
   return (
     <div className="flex flex-col gap-y-4 pl-4 my-6">
       <p className="text-lg text-gray-400">Filters</p>
-      <div className="flex gap-x-12">
+      <div className="flex flex-col md:flex-row gap-x-12 gap-y-4">
         <div className="flex gap-x-6">
           <DefaultBtn onClick={sortByExpensive}>
             <div className="flex flex-col items-center gap-y-2">
