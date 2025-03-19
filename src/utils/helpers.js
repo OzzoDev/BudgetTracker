@@ -16,3 +16,9 @@ export const getFutureDateString = (days) => {
   futureDate.setDate(futureDate.getDate() + days);
   return futureDate.toISOString().split("T")[0];
 };
+
+export function capitalize(str) {
+  if (!str) return "";
+
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}

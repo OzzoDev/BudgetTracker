@@ -16,7 +16,7 @@ export default function SummaryCard({ value, percentage, description }) {
             {isFavorable ? percentage + "% remaining" : percentage - 100 + "% overload"}
           </p>
         </div>
-        <div className="p-2 rounded-md bg-gray-900 bg-opacity-40">
+        <div className="p-2 h-fit rounded-md bg-gray-900 bg-opacity-40">
           {isFavorable ? (
             <GoArrowUpRight size={24} color="green" />
           ) : (
