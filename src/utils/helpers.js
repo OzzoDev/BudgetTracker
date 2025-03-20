@@ -26,3 +26,30 @@ export function capitalize(str) {
 export function formatNumber(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
+
+export function calcGoalProgression(goal, expenses, pay) {
+  const startDate = new Date(goal.startDate);
+  const endDate = new Date(goal.endDate);
+
+  const totalAmount = expenses.reduce((acc, curr) => {
+    const dateSpent = new Date(curr.dateSpent);
+
+    const isWithinTimeSpan = dateSpent >= startDate && dateSpent <= endDate;
+
+    if (isWithinTimeSpan) {
+      return (acc += curr.totalAmount);
+    }
+
+    return acc;
+  }, 0);
+
+  console.log(pay, totalAmount, goal.target, (pay - totalAmount) / goal.target);
+
+  const percentage = Math.round(((pay - totalAmount) / goal.target) * 100) / 100;
+
+  return {
+    percentage,
+    totalAmount,
+    goal,
+  };
+}
