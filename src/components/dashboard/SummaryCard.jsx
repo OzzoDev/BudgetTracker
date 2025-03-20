@@ -1,9 +1,6 @@
-import React from "react";
 import { GoArrowDownRight, GoArrowUpRight } from "react-icons/go";
 
-export default function SummaryCard({ value, percentage, description }) {
-  const isFavorable = percentage < 100;
-
+export default function SummaryCard({ value, percentage, description, isFavorable = true }) {
   return (
     <div className="flex flex-col gap-y-4 p-6 rounded-md min-w-[380px] lg:min-w-0 w-full h-full bg-slate-800">
       <div className="flex justify-between gap-4">
@@ -13,7 +10,7 @@ export default function SummaryCard({ value, percentage, description }) {
             className={`text-sm mb-1 whitespace-nowarp ${
               isFavorable ? "text-green-500" : "text-red-500"
             }`}>
-            {isFavorable ? percentage + "% remaining" : percentage - 100 + "% overload"}
+            {percentage}
           </p>
         </div>
         <div className="p-2 h-fit rounded-md bg-gray-900 bg-opacity-40">

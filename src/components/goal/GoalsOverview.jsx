@@ -12,11 +12,6 @@ export default function GoalsOverview() {
     updatePay(3000);
   });
 
-  //   const sortedGoals = [...goals]
-  //     .map((goal) => calcGoalProgression(goal, expenses, pay))
-  //     .sort((a, b) => b.percentage - a.percentage)
-  //     .map((progression) => goals.find((goa) => goa.id === progression.goal.id));
-
   const sortedGoals = [...goals]
     .map((goal) => calcTotalIncome(goal, pay))
     .sort((a, b) => b - a)
