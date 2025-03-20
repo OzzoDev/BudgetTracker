@@ -46,9 +46,9 @@ const formSchema = z
     }
   );
 
-export default function GoalsForm({ editingGoal }) {
+export default function GoalsForm() {
   const { addGoal, editGoal } = useDataStore();
-  const { updateEditingGoal } = useEditStore();
+  const { editingGoal, updateEditingGoal } = useEditStore();
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(() => {

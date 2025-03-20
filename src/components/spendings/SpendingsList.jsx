@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import useDataStore from "@/hooks/useDataStore";
 import {
   Table,
@@ -13,6 +12,7 @@ import DeleteBtn from "../btn/DeleteBtn";
 import { toast } from "sonner";
 import useEditStore from "@/hooks/useEditStore";
 import DefaultBtn from "../btn/DefaultBtn";
+import { formatNumber } from "@/utils/helpers";
 
 export default function SpendingsList({ expenses }) {
   const { deleteExpense } = useDataStore();
@@ -48,7 +48,7 @@ export default function SpendingsList({ expenses }) {
                     className="transition-all duration-300 ease hover:bg-gray-900 bg-opacity-40">
                     <TableCell>{expense.dateSpent}</TableCell>
                     <TableCell>{expense.spendingCategory}</TableCell>
-                    <TableCell>${expense.totalAmount}</TableCell>
+                    <TableCell>$ {formatNumber(expense.totalAmount)}</TableCell>
                     <TableCell className="flex justify-end gap-x-6 mx-8">
                       <DefaultBtn onClick={() => updateEditingExpense(expense)}>
                         <FaRegEdit size={20} color="cyan" />
