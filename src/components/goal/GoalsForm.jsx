@@ -98,36 +98,92 @@ export default function GoalsForm({ editingGoal }) {
         <div className="flex justify-between w-full">
           <h2 className="text-2xl text-gray-300">Set new saving goal</h2>
         </div>
-        <div className="flex justify-between">
-          <FormField
-            control={control}
-            name="startDate"
-            render={() => (
-              <FormItem>
-                <FormLabel>Start goal at</FormLabel>
-                <Calendar
-                  animate
-                  mode="single"
-                  selected={startDate}
-                  onSelect={(selectedDate) => {
-                    setStartDate(selectedDate);
-                    setValue("startDate", selectedDate.toLocaleDateString("en-CA"));
-                  }}
-                  className="self-center p-0 h-[300px]"
-                />
-                <FormMessage className="text-red-500">
-                  {formMethods.formState.errors.startDate?.message}
-                </FormMessage>
-              </FormItem>
-            )}
-          />
-          <div className="flex flex-col justify-between w-full px-24">
+        <div className="flex flex-col gap-y-12">
+          <div className="flex flex-col md:flex-row items-center lg:items-stretch justify-between gap-y-12">
+            <FormField
+              control={control}
+              name="startDate"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Start saving at</FormLabel>
+                  <Calendar
+                    animate
+                    mode="single"
+                    selected={startDate}
+                    onSelect={(selectedDate) => {
+                      setStartDate(selectedDate);
+                      setValue("startDate", selectedDate.toLocaleDateString("en-CA"));
+                    }}
+                    className="self-center p-0 h-[300px]"
+                  />
+                  <FormMessage className="text-red-500">
+                    {formMethods.formState.errors.startDate?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <div className="hidden lg:flex flex-col justify-between w-full px-24">
+              <FormField
+                control={formMethods.control}
+                name="target"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Amount to save</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter saving goal"
+                        {...field}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          field.onChange(value ? parseFloat(value) : 0);
+                        }}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Enter amount in ($) you want to save within a given time span
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="self-center">
+                <PrimaryBtn type="submit" fullWidth={false}>
+                  {editingGoal ? "Update goal" : "Set goal"}
+                </PrimaryBtn>
+              </div>
+            </div>
+            <FormField
+              control={control}
+              name="endDate"
+              render={() => (
+                <FormItem>
+                  <FormLabel>End saving at</FormLabel>
+                  <Calendar
+                    animate
+                    mode="single"
+                    renderDate={endDate}
+                    selected={endDate}
+                    onSelect={(selectedDate) => {
+                      setEndDate(selectedDate);
+                      setValue("endDate", selectedDate.toLocaleDateString("en-CA"));
+                    }}
+                    className="self-center p-0 h-[300px]"
+                  />
+                  <FormMessage className="text-red-500">
+                    {formMethods.formState.errors.endDate?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="lg:hidden flex flex-col justify-between gap-y-12 w-full">
             <FormField
               control={formMethods.control}
               name="target"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Target</FormLabel>
+                  <FormLabel>Amount to save</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -142,7 +198,6 @@ export default function GoalsForm({ editingGoal }) {
                   <FormDescription>
                     Enter amount in ($) you want to save within a given time span
                   </FormDescription>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -153,29 +208,6 @@ export default function GoalsForm({ editingGoal }) {
               </PrimaryBtn>
             </div>
           </div>
-          <FormField
-            control={control}
-            name="endDate"
-            render={() => (
-              <FormItem>
-                <FormLabel>End goal at</FormLabel>
-                <Calendar
-                  animate
-                  mode="single"
-                  renderDate={endDate}
-                  selected={endDate}
-                  onSelect={(selectedDate) => {
-                    setEndDate(selectedDate);
-                    setValue("endDate", selectedDate.toLocaleDateString("en-CA"));
-                  }}
-                  className="self-center p-0 h-[300px]"
-                />
-                <FormMessage className="text-red-500">
-                  {formMethods.formState.errors.endDate?.message}
-                </FormMessage>
-              </FormItem>
-            )}
-          />
         </div>
         {/* <FormField
           control={formMethods.control}
