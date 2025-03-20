@@ -6,6 +6,7 @@ import useDataStore from "@/hooks/useDataStore";
 import { formatNumber, formatWithDaySuffix } from "@/utils/helpers";
 import InfoCard from "@/components/dashboard/InfoCard";
 import { LuHandCoins } from "react-icons/lu";
+import Shimmer from "@/layouts/animations/Shimmer";
 
 export default function SpendingsPage() {
   const { pay, expenses } = useDataStore();
@@ -56,55 +57,73 @@ export default function SpendingsPage() {
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[repeat(14,1fr)] lg:grid-rows-[repeat(6,1fr)] gap-8 lg:min-h-screen p-8">
       <div className="lg:hidden grid grid-cols-[repeat(3,1fr)] gap-8 overflow-x-auto">
-        <SummaryCard
-          value={`$ ${formatNumber(totalExpenseAmount)}`}
-          percentage={`${percentageUsedIncome}%`}
-          description="The total amount and percentage of income allocated for expenses."
-          isFavorable={percentageUsedIncome <= 82}
-        />
-        <SummaryCard
-          value={formattedSpendingPace}
-          percentage={`$ ${averageSpendingAmount} average spending`}
-          description="The pace of registered expenses and the average amount spent on each expense"
-          isFavorable={spendingPace > 2}
-        />
-        <InfoCard
-          headline={numExpenses}
-          description="Total number of added expenses"
-          icon={<LuHandCoins size={24} color="white" />}
-        />
+        <Shimmer>
+          <SummaryCard
+            value={`$ ${formatNumber(totalExpenseAmount)}`}
+            percentage={`${percentageUsedIncome}%`}
+            description="The total amount and percentage of income allocated for expenses."
+            isFavorable={percentageUsedIncome <= 82}
+          />
+        </Shimmer>
+        <Shimmer>
+          <SummaryCard
+            value={formattedSpendingPace}
+            percentage={`$ ${averageSpendingAmount} average spending`}
+            description="The pace of registered expenses and the average amount spent on each expense"
+            isFavorable={spendingPace > 2}
+          />
+        </Shimmer>
+        <Shimmer>
+          <InfoCard
+            headline={numExpenses}
+            description="Total number of added expenses"
+            icon={<LuHandCoins size={24} color="white" />}
+          />
+        </Shimmer>
       </div>
       <div className="hidden lg:block col-span-3 col-start-1 row-span-1">
-        <SummaryCard
-          value={`$ ${formatNumber(totalExpenseAmount)}`}
-          percentage={`${percentageUsedIncome}%`}
-          description="The total amount and percentage of income allocated for expenses."
-          isFavorable={percentageUsedIncome <= 82}
-        />
+        <Shimmer>
+          <SummaryCard
+            value={`$ ${formatNumber(totalExpenseAmount)}`}
+            percentage={`${percentageUsedIncome}%`}
+            description="The total amount and percentage of income allocated for expenses."
+            isFavorable={percentageUsedIncome <= 82}
+          />
+        </Shimmer>
       </div>
       <div className="hidden lg:block col-span-3 col-start-4 row-span-1">
-        <SummaryCard
-          value={formattedSpendingPace}
-          percentage={`$ ${averageSpendingAmount} average spending`}
-          description="The pace of registered expenses and the average amount spent on each expense"
-          isFavorable={spendingPace > 2}
-        />
+        <Shimmer>
+          <SummaryCard
+            value={formattedSpendingPace}
+            percentage={`$ ${averageSpendingAmount} average spending`}
+            description="The pace of registered expenses and the average amount spent on each expense"
+            isFavorable={spendingPace > 2}
+          />
+        </Shimmer>
       </div>
       <div className="hidden lg:block col-span-3 col-start-7 row-span-1">
-        <InfoCard
-          headline={numExpenses}
-          description="Total number of added expenses"
-          icon={<LuHandCoins size={24} color="white" />}
-        />
+        <Shimmer>
+          <InfoCard
+            headline={numExpenses}
+            description="Total number of added expenses"
+            icon={<LuHandCoins size={24} color="white" />}
+          />
+        </Shimmer>
       </div>
       <div className="lg:row-start-2 lg:col-start-1 lg:col-span-9 lg:row-span-3">
-        <SpendingsForm />
+        <Shimmer>
+          <SpendingsForm />
+        </Shimmer>
       </div>
       <div className="lg:row-start-5 lg:col-start-1 lg:col-span-9 lg:row-span-8">
-        <SpendingsRecord />
+        <Shimmer>
+          <SpendingsRecord />
+        </Shimmer>
       </div>
       <div className="col-span-5 row-start-1 row-span-12">
-        <SpendingsCategroySummary />
+        <Shimmer>
+          <SpendingsCategroySummary />
+        </Shimmer>
       </div>
     </div>
   );
