@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
-import { getFutureDateString, getTodayString } from "@/utils/helpers";
+import { calcTotalIncome, getFutureDateString, getTodayString } from "@/utils/helpers";
 import useDataStore from "@/hooks/useDataStore";
 import useEditStore from "@/hooks/useEditStore";
 import { useEffect, useState } from "react";
@@ -36,8 +36,6 @@ const formSchema = z
       const end = new Date(data.endDate);
       const diffInDays = (end - start) / (1000 * 60 * 60 * 24);
 
-      console.log("Day diff: ", diffInDays);
-
       return diffInDays >= 30;
     },
     {
@@ -47,7 +45,7 @@ const formSchema = z
   );
 
 export default function GoalsForm() {
-  const { addGoal, editGoal } = useDataStore();
+  const { pay, addGoal, editGoal } = useDataStore();
   const { editingGoal, updateEditingGoal } = useEditStore();
 
   const [startDate, setStartDate] = useState(editingGoal ? editingGoal.id : new Date());
@@ -67,7 +65,7 @@ export default function GoalsForm() {
     },
   });
 
-  const { reset, setValue, control } = formMethods;
+  const { reset, setValue, setError, control } = formMethods;
 
   useEffect(() => {
     if (editingGoal) {
@@ -76,6 +74,16 @@ export default function GoalsForm() {
   }, [editingGoal, reset]);
 
   function onSubmit(data) {
+    const isInRange = data.target <= calcTotalIncome(data, pay).totalIncome ? true : false;
+
+    if (!isInRange) {
+      setError("target", {
+        type: "manual",
+        message: "This goal will not be reachable with your income",
+      });
+      return;
+    }
+
     if (editingGoal) {
       editGoal({ ...data, id: editingGoal.id });
       updateEditingGoal(undefined);

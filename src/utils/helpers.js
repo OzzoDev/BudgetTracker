@@ -31,6 +31,8 @@ export function calcGoalProgression(goal, expenses, pay) {
   const startDate = new Date(goal.startDate);
   const endDate = new Date(goal.endDate);
 
+  const totalIncome = calcTotalIncome(goal, pay).totalIncome;
+
   const totalAmount = expenses.reduce((acc, curr) => {
     const dateSpent = new Date(curr.dateSpent);
 
@@ -43,13 +45,24 @@ export function calcGoalProgression(goal, expenses, pay) {
     return acc;
   }, 0);
 
-  console.log(pay, totalAmount, goal.target, (pay - totalAmount) / goal.target);
-
-  const percentage = Math.round(((pay - totalAmount) / goal.target) * 100) / 100;
+  const percentage = Math.round(((totalIncome - totalAmount) / goal.target) * 100) / 100;
 
   return {
     percentage,
     totalAmount,
     goal,
+  };
+}
+
+export function calcTotalIncome(goal, pay) {
+  const start = new Date(goal.startDate);
+  const end = new Date(goal.endDate);
+  const numDays = (end - start) / (1000 * 60 * 60 * 24);
+  const dailyIncome = pay / 30;
+  const totalIncome = dailyIncome * numDays;
+
+  return {
+    goal,
+    totalIncome,
   };
 }

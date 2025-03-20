@@ -1,5 +1,5 @@
 import useDataStore from "@/hooks/useDataStore";
-import { calcGoalProgression, formatNumber } from "@/utils/helpers";
+import { calcGoalProgression, calcTotalIncome, formatNumber } from "@/utils/helpers";
 import { useEffect } from "react";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import GoalProgressionBar from "./GoalProgressionBar";
@@ -12,10 +12,21 @@ export default function GoalsOverview() {
     updatePay(3000);
   });
 
+  //   const sortedGoals = [...goals]
+  //     .map((goal) => calcGoalProgression(goal, expenses, pay))
+  //     .sort((a, b) => b.percentage - a.percentage)
+  //     .map((progression) => goals.find((goa) => goa.id === progression.goal.id));
+
   const sortedGoals = [...goals]
-    .map((goal) => calcGoalProgression(goal, expenses, pay))
-    .sort((a, b) => b.percentage - a.percentage)
-    .map((progression) => goals.find((goa) => goa.id === progression.goal.id));
+    .map((goal) => calcTotalIncome(goal, pay))
+    .sort((a, b) => b - a)
+    .map((income) => goals.find((goa) => goa.id === income.goal.id))
+    .map((goal) => (calcGoalProgression(goal, expenses, pay).percentage < 1 ? goal : null))
+    .filter((goal) => goal);
+
+  const reachedGoals = [...goals]
+    .map((goal) => (calcGoalProgression(goal, expenses, pay).percentage >= 1 ? goal : null))
+    .filter((goal) => goal);
 
   const highestGoal = goals.length > 0 ? sortedGoals[0] : null;
   const lowestGoal = goals.length > 1 ? sortedGoals[sortedGoals.length - 1] : null;
@@ -24,8 +35,6 @@ export default function GoalsOverview() {
     goals.length > 0 ? calcGoalProgression(sortedGoals[0], expenses, pay) : 0;
   const lowestGoalProgression =
     goals.length > 1 ? calcGoalProgression(sortedGoals[sortedGoals.length - 1], expenses, pay) : 0;
-
-  console.log(calcGoalProgression(goals[0], expenses, pay));
 
   const noGoals = goals.length === 0;
   return (
@@ -44,7 +53,7 @@ export default function GoalsOverview() {
                 <GoalProgressionBar percentage={highestGoalProgression.percentage} />
                 <div className="px-4">
                   <GoalsSavedAmount
-                    target={highestGoal.target}
+                    goal={highestGoal}
                     pay={pay}
                     savedAmount={highestGoalProgression.totalAmount}
                     percentage={highestGoalProgression.percentage}
@@ -74,7 +83,7 @@ export default function GoalsOverview() {
                 <GoalProgressionBar percentage={lowestGoalProgression.percentage} />
                 <div className="px-4">
                   <GoalsSavedAmount
-                    target={lowestGoal.target}
+                    goal={lowestGoal}
                     pay={pay}
                     savedAmount={lowestGoalProgression.totalAmount}
                     percentage={lowestGoalProgression.percentage}
@@ -94,11 +103,11 @@ export default function GoalsOverview() {
           )}
         </div>
       ) : (
-        <p className="text-xl text-gray-400">You currently have no expenses</p>
+        <p className="text-xl text-gray-400">You currently have no savings goals</p>
       )}
       {!noGoals && <p className="text-xl text-gray-400 my-12">Savings goals overview</p>}
       <ul className="flex flex-col gap-y-12 px-4 pb-8 max-h-[1100px] overflow-y-auto">
-        {sortedGoals.map((goal) => {
+        {[...sortedGoals, ...reachedGoals].map((goal) => {
           return (
             <div key={goal.id}>
               <p className="flex gap-x-2">
@@ -114,7 +123,7 @@ export default function GoalsOverview() {
                 />
                 <div className="px-4">
                   <GoalsSavedAmount
-                    target={goal.target}
+                    goal={goal}
                     pay={pay}
                     savedAmount={calcGoalProgression(goal, expenses, pay).totalAmount}
                     percentage={calcGoalProgression(goal, expenses, pay).percentage}
