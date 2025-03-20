@@ -3,6 +3,8 @@ import { GoGoal } from "react-icons/go";
 import { BiCategory } from "react-icons/bi";
 import { LuHandCoins } from "react-icons/lu";
 import { NavLink } from "react-router";
+import useDataStore from "@/hooks/useDataStore";
+import { formatNumber } from "@/utils/helpers";
 
 const LINKS = [
   {
@@ -28,9 +30,14 @@ const LINKS = [
 ];
 
 export default function DashboardHeader() {
+  const { pay } = useDataStore();
+
   return (
     <nav className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-y-4 py-4 px-8 bg-slate-800">
-      <h1 className="text-2xl text-blue-300 font-semibold">Budget Tracker</h1>
+      <div>
+        <h1 className="text-2xl text-blue-300 font-semibold">Budget Tracker</h1>
+        <h2 className="text-lg text-white">$ {formatNumber(pay)}</h2>
+      </div>
       <ul className="flex gap-x-4 lg:gap-x-8">
         {LINKS.map((link, index) => {
           return (

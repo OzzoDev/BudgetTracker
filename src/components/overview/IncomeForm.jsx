@@ -1,9 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
-  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -12,16 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  calcTotalIncome,
-  formatNumber,
-  getFutureDateString,
-  getTodayString,
-} from "@/utils/helpers";
+import { formatNumber } from "@/utils/helpers";
 import useDataStore from "@/hooks/useDataStore";
-import useEditStore from "@/hooks/useEditStore";
-import { useEffect, useState } from "react";
 import PrimaryBtn from "../btn/PrimaryBtn";
 import { toast } from "sonner";
 
@@ -49,7 +39,7 @@ export default function IncomeForm() {
     <FormProvider {...formMethods}>
       <form
         onSubmit={formMethods.handleSubmit(onSubmit)}
-        className="flex flex-col justify-between p-8 h-full rounded-md bg-slate-800">
+        className="flex flex-col gap-y-12 lg:gap-y-24 p-8 h-full rounded-md bg-slate-800">
         <div className="flex justify-between w-full">
           <h2 className="text-2xl text-gray-300">Update your monlty income</h2>
         </div>

@@ -1,4 +1,5 @@
 import useDataStore from "@/hooks/useDataStore";
+import { formatNumber } from "@/utils/helpers";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 
 export default function SpendingsCategroySummary() {
@@ -59,7 +60,7 @@ export default function SpendingsCategroySummary() {
                   className="h-2 w-full rounded-full shadow-md"
                 />
                 <p className="text-gray-400 font-medium">{mostExpensiveCategory.category}</p>
-                <p>${mostExpensiveCategory.amount}</p>
+                <p>$ {formatNumber(mostExpensiveCategory.amount)}</p>
               </div>
             </div>
           )}
@@ -77,7 +78,7 @@ export default function SpendingsCategroySummary() {
                   className="h-2 w-full rounded-full shadow-md"
                 />
                 <p className="text-gray-400 font-medium">{cheapestCategory.category}</p>
-                <p>${cheapestCategory.amount}</p>
+                <p>$ {formatNumber(cheapestCategory.amount)}</p>
               </div>
             </div>
           )}
@@ -98,7 +99,7 @@ export default function SpendingsCategroySummary() {
                 <p className="text-lg text-gray-400 font-medium">{category.category}</p>
               </div>
               <div className="flex flex-col gap-y-1 px-4">
-                <p>${category.amount}</p>
+                <p>$ {formatNumber(category.amount)}</p>
                 <p
                   className={`${
                     isAverageAmout(category.amount) ? "text-green-500" : "text-red-500"

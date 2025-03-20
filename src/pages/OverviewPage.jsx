@@ -1,11 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { PieChartCard } from "../components/statistics/PieChartCard";
-import { BarChartInteractive } from "../components/statistics/BarChartInteractive";
 import IncomeForm from "@/components/overview/IncomeForm";
 
 export default function OverviewPage() {
   return (
-    <div className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] grid-rows-[repeat(12,1fr)] gap-8 p-8">
+    <div className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] grid-rows-[repeat(1,1fr)] gap-8 p-8">
       <div className="col-span-8">
         <IncomeForm />
       </div>
@@ -41,14 +38,5 @@ export default function OverviewPage() {
         </div>
       </div>
     </div>
-    // <div className="flex flex-col gap-8 p-8">
-    //   <IncomeForm />
-    // </div>
-    // <div className="flex flex-col justify-center items-center gap-y-10 h-screen">
-    //   <h1 className="text-4xl">React Dashboard</h1>
-    //   <Button>Click me</Button>
-    //   <PieChartCard />
-    //   <BarChartInteractive />
-    // </div>
   );
 }
