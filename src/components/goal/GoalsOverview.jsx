@@ -1,16 +1,11 @@
 import useDataStore from "@/hooks/useDataStore";
 import { calcGoalProgression, calcTotalIncome, formatNumber } from "@/utils/helpers";
-import { useEffect } from "react";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import GoalProgressionBar from "./GoalProgressionBar";
 import GoalsSavedAmount from "./GoalsSavedAmount";
 
 export default function GoalsOverview() {
-  const { goals, expenses, pay, updatePay } = useDataStore();
-
-  useEffect(() => {
-    updatePay(3000);
-  });
+  const { goals, expenses, pay } = useDataStore();
 
   const sortedGoals = [...goals]
     .map((goal) => calcTotalIncome(goal, pay))

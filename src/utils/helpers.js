@@ -80,6 +80,7 @@ export function formatWithDaySuffix(number) {
   const value = roundedNumber % 100;
 
   let suffix;
+
   if (value >= 11 && value <= 13) {
     suffix = suffixes[0];
   } else {

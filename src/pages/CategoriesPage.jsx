@@ -1,6 +1,5 @@
 import useDataStore from "@/hooks/useDataStore";
 import CategoryForm from "../components/category/CategoryForm";
-import CategoryCard from "@/components/category/CategoryCard";
 import CategoryList from "@/components/category/CategoryList";
 import CategoryUsage from "@/components/category/CategoryUsage";
 import SummaryCard from "@/components/dashboard/SummaryCard";

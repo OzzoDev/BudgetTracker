@@ -1,4 +1,4 @@
-import { setCategories, setExpenses, setGoals, setPay, setMany } from "@/state/dataSlice";
+import { setCategories, setExpenses, setGoals, setPay, setMany } from "@/store/dataSlice";
 import { generateID } from "@/utils/helpers";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";

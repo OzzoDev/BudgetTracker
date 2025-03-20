@@ -1,11 +1,22 @@
 import { DATA_KEY } from "@/constants/constants";
 import { createSlice } from "@reduxjs/toolkit";
 
+const defaultCategories = [
+  { category: "Food", color: "#1b3eee", id: "1" },
+  { category: "Transportation", color: "#900404", id: "2" },
+  { category: "Accommodation", color: "#bd720a", id: "3" },
+  { category: "Hobbies", color: "#098639", id: "5" },
+  { category: "Hygiene", color: "#9de87d", id: "6" },
+  { category: "Subscriptions", color: "#002aff", id: "8" },
+  { category: "Insurance", color: "#751067", id: "9" },
+  { category: "Clothing", color: "#00ff2a", id: "10" },
+];
+
 const defaultState = {
-  pay: 0,
+  pay: 3000,
   expenses: [],
   goals: [],
-  categories: [],
+  categories: defaultCategories,
 };
 
 const initialState = (() => {
