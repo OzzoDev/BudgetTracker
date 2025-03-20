@@ -23,13 +23,15 @@ export default function GoalsOverview() {
     .map((goal) => (calcGoalProgression(goal, expenses, pay).percentage >= 1 ? goal : null))
     .filter((goal) => goal);
 
-  const highestGoal = goals.length > 0 ? sortedGoals[0] : null;
-  const lowestGoal = goals.length > 1 ? sortedGoals[sortedGoals.length - 1] : null;
+  const highestGoal = sortedGoals.length > 0 ? sortedGoals[0] : null;
+  const lowestGoal = sortedGoals.length > 1 ? sortedGoals[sortedGoals.length - 1] : null;
 
   const highestGoalProgression =
-    goals.length > 0 ? calcGoalProgression(sortedGoals[0], expenses, pay) : 0;
+    sortedGoals.length > 0 ? calcGoalProgression(sortedGoals[0], expenses, pay) : 0;
   const lowestGoalProgression =
-    goals.length > 1 ? calcGoalProgression(sortedGoals[sortedGoals.length - 1], expenses, pay) : 0;
+    sortedGoals.length > 1
+      ? calcGoalProgression(sortedGoals[sortedGoals.length - 1], expenses, pay)
+      : 0;
 
   const noGoals = goals.length === 0;
   return (

@@ -18,6 +18,7 @@ import useDataStore from "@/hooks/useDataStore";
 import useEditStore from "@/hooks/useEditStore";
 import { useEffect, useState } from "react";
 import PrimaryBtn from "../btn/PrimaryBtn";
+import { toast } from "sonner";
 
 const formSchema = z
   .object({
@@ -87,8 +88,14 @@ export default function GoalsForm() {
     if (editingGoal) {
       editGoal({ ...data, id: editingGoal.id });
       updateEditingGoal(undefined);
+      toast("Goal edited notification", {
+        description: `Savings goal "${data.startDate}, $${data.endDate}, ${data.target} edited successfully"`,
+      });
     } else {
       addGoal(data);
+      toast("Goal added notification", {
+        description: "Goal added to savings goals successfully",
+      });
     }
     reset({
       id: "-1",

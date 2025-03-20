@@ -5,6 +5,8 @@ export default function GoalsSavedAmount({ goal, pay, savedAmount, percentage })
 
   const remaining = goal.target - (totalIncome - savedAmount);
 
+  const moneyLeft = totalIncome - savedAmount - goal.target;
+
   const isGoalReached = remaining <= 0;
 
   return (
@@ -16,7 +18,9 @@ export default function GoalsSavedAmount({ goal, pay, savedAmount, percentage })
         <p>({percentage * 100}%)</p>
       </div>
       {isGoalReached ? (
-        <p className="px-1 mt-1 text-sm text-green-400">Goal reached</p>
+        <p className="px-1 mt-1 text-sm text-green-400">
+          Goal reached + $ {formatNumber(moneyLeft)}
+        </p>
       ) : (
         <p className="px-1 mt-1 text-sm text-red-400">$ {formatNumber(remaining)} missing</p>
       )}
