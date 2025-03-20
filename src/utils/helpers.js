@@ -141,3 +141,22 @@ export function getMonthlySpendingStats(expenses) {
     },
   };
 }
+
+export function categorizeExpenses(expenses) {
+  const categorized = expenses.reduce((acc, expense) => {
+    const category = expense.spendingCategory;
+
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+
+    acc[category].push(expense);
+
+    return acc;
+  }, {});
+
+  return Object.entries(categorized).map(([category, expenses]) => ({
+    category,
+    expenses,
+  }));
+}

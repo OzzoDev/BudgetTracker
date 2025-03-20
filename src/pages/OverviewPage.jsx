@@ -1,15 +1,18 @@
 import SummaryCard from "@/components/dashboard/SummaryCard";
+import CategoryChart from "@/components/overview/CategoryChart";
 import IncomeForm from "@/components/overview/IncomeForm";
 import useDataStore from "@/hooks/useDataStore";
 import Shimmer from "@/layouts/animations/Shimmer";
-import { formatNumber, getMonthlySpendingStats } from "@/utils/helpers";
+import { categorizeExpenses, formatNumber, getMonthlySpendingStats } from "@/utils/helpers";
 
 export default function OverviewPage() {
   const { expenses } = useDataStore();
 
   const montlySpendingsStats = getMonthlySpendingStats(expenses);
 
-  console.log(montlySpendingsStats);
+  const categorizedExpenses = categorizeExpenses(expenses);
+
+  console.log(categorizedExpenses);
 
   return (
     <div className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] grid-rows-[repeat(7,1fr)] gap-8 lg:min-h-screen p-8">
@@ -107,6 +110,7 @@ export default function OverviewPage() {
           />
         </Shimmer>
       </div>
+      <CategoryChart categorizedExpenses={categorizedExpenses} />
     </div>
   );
 }
