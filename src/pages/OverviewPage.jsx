@@ -1,5 +1,6 @@
 import SummaryCard from "@/components/dashboard/SummaryCard";
-import CategoryChart from "@/components/overview/CategoryChart";
+import CategoryCountChart from "@/components/overview/CategoryCountChart";
+import CategorySpendingsChart from "@/components/overview/CategorySpendingsChart";
 import IncomeForm from "@/components/overview/IncomeForm";
 import useDataStore from "@/hooks/useDataStore";
 import Shimmer from "@/layouts/animations/Shimmer";
@@ -15,7 +16,7 @@ export default function OverviewPage() {
   console.log(categorizedExpenses);
 
   return (
-    <div className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] grid-rows-[repeat(7,1fr)] gap-8 lg:min-h-screen p-8">
+    <div className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] grid-rows-[repeat(10,1fr)] gap-8 lg:min-h-screen p-8">
       <div className="col-span-8 row-span-3 row-start-1">
         <Shimmer>
           <IncomeForm />
@@ -110,7 +111,12 @@ export default function OverviewPage() {
           />
         </Shimmer>
       </div>
-      <CategoryChart categorizedExpenses={categorizedExpenses} />
+      <div className="row-span-3 row-start-5 col-span-5 col-start-1">
+        <CategoryCountChart categorizedExpenses={categorizedExpenses} />
+      </div>
+      <div className="row-span-3 row-start-5 col-span-5 col-start-6">
+        <CategorySpendingsChart categorizedExpenses={categorizedExpenses} />
+      </div>
     </div>
   );
 }
