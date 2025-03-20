@@ -89,3 +89,55 @@ export function formatWithDaySuffix(number) {
 
   return `${roundedNumber}:${suffix}`;
 }
+
+export function getMonthlySpendingStats(expenses) {
+  const monthlyTotals = expenses.reduce((acc, expense) => {
+    const month = new Date(expense.dateSpent).toLocaleString("default", {
+      month: "long",
+      year: "numeric",
+    });
+
+    if (!acc[month]) {
+      acc[month] = 0;
+    }
+
+    acc[month] += expense.totalAmount;
+    return acc;
+  }, {});
+
+  const monthlyStats = Object.entries(monthlyTotals).map(([month, total]) => ({
+    month,
+    total,
+  }));
+
+  const highest = monthlyStats.reduce(
+    (prev, curr) => (curr.total > prev.total ? curr : prev),
+    monthlyStats[0]
+  );
+  const lowest = monthlyStats.reduce(
+    (prev, curr) => (curr.total < prev.total ? curr : prev),
+    monthlyStats[0]
+  );
+
+  const averageTotal = monthlyStats.reduce((sum, stat) => sum + stat.total, 0);
+  const averageValue = averageTotal / monthlyStats.length;
+
+  const averageMonth = monthlyStats.reduce((prev, curr) => {
+    return Math.abs(curr.total - averageValue) < Math.abs(prev.total - averageValue) ? curr : prev;
+  });
+
+  return {
+    highest: {
+      month: capitalize(highest.month),
+      total: highest.total,
+    },
+    average: {
+      month: capitalize(averageMonth.month),
+      total: averageValue,
+    },
+    lowest: {
+      month: capitalize(lowest.month),
+      total: lowest.total,
+    },
+  };
+}
