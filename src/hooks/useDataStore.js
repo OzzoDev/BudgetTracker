@@ -72,13 +72,9 @@ const useDataStore = () => {
 
   const editGoal = useCallback(
     (editedGoal) => {
-      console.log("edited:", editedGoal);
-
       const updatedGoals = [...dataState.goals].map((goa) =>
         editedGoal.id === goa.id ? editedGoal : goa
       );
-
-      console.log(updatedGoals);
 
       dispatch(setGoals(updatedGoals));
     },

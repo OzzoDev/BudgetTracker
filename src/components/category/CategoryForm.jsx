@@ -117,7 +117,8 @@ export default function CategoryForm() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Write the name of your category. This will be used to split up your spending.
+                  Please enter the name of your category. This will be used to categorize your
+                  spendings
                 </FormDescription>
                 <FormMessage />
               </FormItem>

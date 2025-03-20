@@ -89,7 +89,7 @@ export default function GoalsForm() {
       editGoal({ ...data, id: editingGoal.id });
       updateEditingGoal(undefined);
       toast("Goal edited notification", {
-        description: `Savings goal "${data.startDate}, $${data.endDate}, ${data.target} edited successfully"`,
+        description: `Savings goal "${data.startDate}, ${data.endDate}, ${data.target} edited successfully"`,
       });
     } else {
       addGoal(data);
