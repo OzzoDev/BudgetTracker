@@ -46,7 +46,7 @@ const formSchema = z
   );
 
 export default function GoalsForm() {
-  const { pay, addGoal, editGoal } = useDataStore();
+  const { pay, goals, addGoal, editGoal } = useDataStore();
   const { editingGoal, updateEditingGoal } = useEditStore();
 
   const [startDate, setStartDate] = useState(editingGoal ? editingGoal.id : new Date());
@@ -66,13 +66,24 @@ export default function GoalsForm() {
     },
   });
 
-  const { reset, setValue, setError, control } = formMethods;
+  const {
+    reset,
+    setValue,
+    setError,
+    clearErrors,
+    control,
+    formState: { errors },
+  } = formMethods;
 
   useEffect(() => {
     if (editingGoal) {
       reset(editingGoal);
     }
   }, [editingGoal, reset]);
+
+  useEffect(() => {
+    clearErrors("root");
+  }, [goals, editingGoal]);
 
   function onSubmit(data) {
     const isInRange = data.target <= calcTotalIncome(data, pay).totalIncome ? true : false;
@@ -81,6 +92,16 @@ export default function GoalsForm() {
       setError("target", {
         type: "manual",
         message: "This goal will not be reachable with your income",
+      });
+      return;
+    }
+
+    const maximumAllowedGoalsExceeded = goals.length >= 10;
+
+    if (maximumAllowedGoalsExceeded) {
+      setError("root", {
+        type: "manual",
+        message: "Maximum 10 savings goals allowed",
       });
       return;
     }
@@ -224,32 +245,7 @@ export default function GoalsForm() {
             </div>
           </div>
         </div>
-        {/* <FormField
-          control={formMethods.control}
-          name="startDate"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Start at</FormLabel>
-              <FormControl>
-                <Input type="date" placeholder="Enter start date" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={formMethods.control}
-          name="endDate"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>End at</FormLabel>
-              <FormControl>
-                <Input type="date" placeholder="Enter end date" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
+        <p className="text-red-500 text-center font-medium">{errors?.root?.message}</p>
       </form>
     </FormProvider>
   );
