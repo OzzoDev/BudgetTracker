@@ -34,7 +34,7 @@ export default function SpendingsForm() {
   const { categories, addExpense, editExpense } = useDataStore();
   const { editingExpense, updateEditingExpense } = useEditStore();
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(editingExpense ? editingExpense.dateSpent : new Date());
 
   const formMethods = useForm({
     resolver: zodResolver(formSchema),

@@ -50,7 +50,7 @@ export default function GoalsList() {
                     <TableCell>{goal.endDate}</TableCell>
                     <TableCell>$ {formatNumber(goal.target)}</TableCell>
                     <TableCell className="flex justify-end gap-x-6 mx-8">
-                      <DefaultBtn onClick={() => updateEditingExpense(goal)}>
+                      <DefaultBtn onClick={() => updateEditingGoal(goal)}>
                         <FaRegEdit size={20} color="cyan" />
                       </DefaultBtn>
                       <DeleteBtn iconSize={20} onDelete={() => handleDeleteGoal(goal.id)} />

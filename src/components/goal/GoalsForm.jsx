@@ -50,11 +50,11 @@ export default function GoalsForm() {
   const { addGoal, editGoal } = useDataStore();
   const { editingGoal, updateEditingGoal } = useEditStore();
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(editingGoal ? editingGoal.id : new Date());
   const [endDate, setEndDate] = useState(() => {
     const initialEndDate = new Date(startDate);
     initialEndDate.setDate(initialEndDate.getDate() + 30);
-    return initialEndDate;
+    return editingGoal ? editingGoal.endDate : initialEndDate;
   });
 
   const formMethods = useForm({
