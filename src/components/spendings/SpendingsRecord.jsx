@@ -13,13 +13,17 @@ export default function SpendingsRecord() {
     setFilteredExpenses(expenses);
   }, [expenses]);
 
+  const noExpenses = expenses.length === 0;
+
   return (
     <div className="relative p-8 pb-24 rounded-md bg-slate-800 h-full">
       <h2 className="text-2xl text-gray-300 mb-8">Your spending records</h2>
-      <SpendingsFilters expenses={expenses} setExpenses={setFilteredExpenses} />
+      {!noExpenses && <SpendingsFilters expenses={expenses} setExpenses={setFilteredExpenses} />}
       <SpendingsList expenses={pagintedExpenses} />
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <Paginator items={filteredExpenses} maxItems={8} setItems={setPagintedExpenses} />
+        {!noExpenses && (
+          <Paginator items={filteredExpenses} maxItems={8} setItems={setPagintedExpenses} />
+        )}
       </div>
     </div>
   );

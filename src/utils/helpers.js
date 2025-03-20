@@ -66,3 +66,25 @@ export function calcTotalIncome(goal, pay) {
     totalIncome,
   };
 }
+
+export function formatWithDaySuffix(number) {
+  if (number < 1) {
+    return "> Every day";
+  } else if (number === 1) {
+    return "Every day";
+  }
+
+  const roundedNumber = Math.round(number);
+
+  const suffixes = ["th", "st", "nd", "rd"];
+  const value = roundedNumber % 100;
+
+  let suffix;
+  if (value >= 11 && value <= 13) {
+    suffix = suffixes[0];
+  } else {
+    suffix = suffixes[roundedNumber % 10] || suffixes[0];
+  }
+
+  return `${roundedNumber}:${suffix}`;
+}
