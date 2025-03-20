@@ -1,16 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { getTodayString } from "@/utils/helpers";
 import useEditStore from "@/hooks/useEditStore";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -43,7 +36,7 @@ export default function SpendingsForm() {
 
   const [date, setDate] = useState(new Date());
 
-  const form = useForm({
+  const formMethods = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       dateSpent: getTodayString(),
@@ -54,9 +47,10 @@ export default function SpendingsForm() {
 
   const {
     reset,
+    setValue,
     control,
     formState: { errors },
-  } = form;
+  } = formMethods;
 
   useEffect(() => {
     if (editingExpense) {
@@ -97,9 +91,9 @@ export default function SpendingsForm() {
   }
 
   return (
-    <Form {...form}>
+    <FormProvider {...formMethods}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={formMethods.handleSubmit(onSubmit)}
         className="flex flex-col gap-y-24 p-8 h-full rounded-md bg-slate-800">
         <div className="flex justify-between w-full">
           <h2 className="text-2xl text-gray-300">Add new expense</h2>
@@ -178,18 +172,18 @@ export default function SpendingsForm() {
                   selected={date}
                   onSelect={(selectedDate) => {
                     setDate(selectedDate);
-                    form.setValue("dateSpent", selectedDate.toLocaleDateString("en-CA"));
+                    setValue("dateSpent", selectedDate.toLocaleDateString("en-CA"));
                   }}
                   className="self-center p-0 h-[300px]"
                 />
                 <FormMessage className="text-red-500">
-                  {form.formState.errors.dateSpent?.message}
+                  {formMethods.formState.errors.dateSpent?.message}
                 </FormMessage>
               </FormItem>
             )}
           />
         </div>
       </form>
-    </Form>
+    </FormProvider>
   );
 }
