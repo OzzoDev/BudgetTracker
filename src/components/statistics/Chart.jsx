@@ -9,7 +9,9 @@ export default function Chart({ xAxisKey, yAxisKey, chartData }) {
       <CartesianGrid />
       <XAxis dataKey={xAxisKey} />
       <YAxis />
-      <Tooltip content={<CustomTooltip />} />
+      <Tooltip
+        content={<CustomTooltip xAxisKey={xAxisKey} yAxisKey={yAxisKey} />}
+      />
       <Bar dataKey={yAxisKey} fill="#8884d8" />
     </BarChart>
   );

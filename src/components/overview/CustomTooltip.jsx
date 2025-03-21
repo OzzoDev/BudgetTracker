@@ -1,9 +1,9 @@
-export default function CustomTooltip({ active, payload }) {
+export default function CustomTooltip({ active, payload, xAxisKey, yAxisKey }) {
   if (active && payload && payload.length) {
-    const { name, expense } = payload[0].payload;
+    const data = payload[0].payload;
     return (
-      <div className="p-2 rounded-md bg-black">
-        <p className="label">{`${name} has ${expense} expenses`}</p>
+      <div className="p-2 rounded-md bg-black text-white">
+        <p className="label">{`${data[xAxisKey]} has ${data[yAxisKey]} expenses`}</p>
       </div>
     );
   }
