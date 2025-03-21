@@ -8,6 +8,8 @@ export default function Chart({ xAxisKey, yAxisKey, chartData, colorMap, message
       <CartesianGrid />
       <XAxis
         dataKey={xAxisKey}
+        tickCount={chartData.length}
+        interval={0}
         tick={(props) => <CustomXAxisTick {...props} colorMap={colorMap} />}
       />
       <YAxis />

@@ -46,8 +46,7 @@ export function calcGoalProgression(goal, expenses, pay) {
     return acc;
   }, 0);
 
-  const percentage =
-    Math.round(((totalIncome - totalAmount) / goal.target) * 100) / 100;
+  const percentage = Math.round(((totalIncome - totalAmount) / goal.target) * 100) / 100;
 
   return {
     percentage,
@@ -98,7 +97,7 @@ export function getMonthlySpendingStats(expenses) {
   }
 
   const monthlyTotals = expenses.reduce((acc, expense) => {
-    const month = new Date(expense.dateSpent).toLocaleString("default", {
+    const month = new Date(expense.dateSpent).toLocaleString("en-US", {
       month: "long",
       year: "numeric",
     });
@@ -129,10 +128,7 @@ export function getMonthlySpendingStats(expenses) {
   const averageValue = averageTotal / monthlyStats.length;
 
   const averageMonth = monthlyStats.reduce((prev, curr) => {
-    return Math.abs(curr.total - averageValue) <
-      Math.abs(prev.total - averageValue)
-      ? curr
-      : prev;
+    return Math.abs(curr.total - averageValue) < Math.abs(prev.total - averageValue) ? curr : prev;
   });
 
   return {
