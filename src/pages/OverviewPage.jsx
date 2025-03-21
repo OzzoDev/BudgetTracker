@@ -168,6 +168,7 @@ export default function OverviewPage() {
             messages={categorySpendingsChartData.map(
               (data) => `You have spent $ ${formatNumber(data.amount)} on ${data.name}`
             )}
+            isCountChart={false}
           />
         </div>
       )}
