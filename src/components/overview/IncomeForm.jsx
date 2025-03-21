@@ -30,7 +30,9 @@ export default function IncomeForm() {
   function onSubmit(data) {
     updatePay(data.pay);
     toast("Income update notification", {
-      description: `Income has successfully been updated to $ ${formatNumber(data.pay)}`,
+      description: `Income has successfully been updated to $ ${formatNumber(
+        data.pay
+      )}`,
     });
     reset({ pay: data.pay });
   }
@@ -39,16 +41,17 @@ export default function IncomeForm() {
     <FormProvider {...formMethods}>
       <form
         onSubmit={formMethods.handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-12 lg:gap-y-24 p-8 h-full rounded-md bg-slate-800">
+        className="flex flex-col gap-y-12 lg:gap-y-24 p-8 h-full rounded-md bg-slate-800"
+      >
         <div className="flex justify-between w-full">
-          <h2 className="text-2xl text-gray-300">Update your monlty income</h2>
+          <h2 className="text-2xl text-gray-300">Update your monthly income</h2>
         </div>
         <FormField
-          control={formMethods.control}
+          control={control}
           name="pay"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Montly Income ($)</FormLabel>
+              <FormLabel>Monthly Income ($)</FormLabel>
               <FormControl>
                 <Input
                   type="number"
@@ -61,8 +64,8 @@ export default function IncomeForm() {
                 />
               </FormControl>
               <FormDescription>
-                Please enter your monthly income in dollars, which will be used to determine whether
-                you can achieve your savings goals
+                Please enter your monthly income in dollars, which will be used
+                to determine whether you can achieve your savings goals
               </FormDescription>
               <FormMessage />
             </FormItem>

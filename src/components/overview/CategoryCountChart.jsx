@@ -1,10 +1,18 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
 import CustomTooltip from "./CustomTooltip";
 
 export default function CategoryCountChart({ categorizedExpenses }) {
   const chartData = categorizedExpenses.map((category) => ({
     name: category.category,
-    expenseCount: category.expenses.length,
+    expense: category.expenses.length,
   }));
 
   return (
@@ -13,8 +21,7 @@ export default function CategoryCountChart({ categorizedExpenses }) {
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip content={<CustomTooltip />} />
-      <Legend />
-      <Bar dataKey="expenseCount" fill="#8884d8" />
+      <Bar dataKey="expense" fill="#8884d8" />
     </BarChart>
   );
 }

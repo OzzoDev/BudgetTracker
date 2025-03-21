@@ -24,6 +24,7 @@ export function capitalize(str) {
 }
 
 export function formatNumber(num) {
+  if (!num) return;
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
@@ -45,7 +46,8 @@ export function calcGoalProgression(goal, expenses, pay) {
     return acc;
   }, 0);
 
-  const percentage = Math.round(((totalIncome - totalAmount) / goal.target) * 100) / 100;
+  const percentage =
+    Math.round(((totalIncome - totalAmount) / goal.target) * 100) / 100;
 
   return {
     percentage,
@@ -91,6 +93,10 @@ export function formatWithDaySuffix(number) {
 }
 
 export function getMonthlySpendingStats(expenses) {
+  if (!expenses || expenses.length === 0) {
+    return;
+  }
+
   const monthlyTotals = expenses.reduce((acc, expense) => {
     const month = new Date(expense.dateSpent).toLocaleString("default", {
       month: "long",
@@ -123,7 +129,10 @@ export function getMonthlySpendingStats(expenses) {
   const averageValue = averageTotal / monthlyStats.length;
 
   const averageMonth = monthlyStats.reduce((prev, curr) => {
-    return Math.abs(curr.total - averageValue) < Math.abs(prev.total - averageValue) ? curr : prev;
+    return Math.abs(curr.total - averageValue) <
+      Math.abs(prev.total - averageValue)
+      ? curr
+      : prev;
   });
 
   return {
