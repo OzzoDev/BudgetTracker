@@ -34,13 +34,15 @@ export default function OverviewPage() {
   }));
 
   return (
-    <div className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] grid-rows-[repeat(12,auto)] gap-8 lg:min-h-screen p-8">
-      <div className="col-span-9 row-span-1">
+    <div
+      style={{ gridTemplateRows: "1fr 1fr 1fr minmax(100px, auto) 400px" }}
+      className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] gap-8 lg:min-h-screen p-8">
+      <div className="col-span-9 row-span-2">
         <Shimmer>
           <IncomeForm />
         </Shimmer>
       </div>
-      <div className="col-span-3 row-span-2 p-8 rounded-md bg-slate-800">
+      <div className="col-span-3 row-span-3 p-8 rounded-md bg-slate-800">
         <Shimmer>
           <h2 className="text-lg text-green-400 font-medium">
             Welcome to the premier platform designed to help you track your spending and establish
@@ -138,38 +140,44 @@ export default function OverviewPage() {
         </div>
       )}
       {hasCategoires && (
-        <div className="row-span-2 col-span-2">
-          <CategoryColorMap />
+        <div className="row-span-1 col-span-12">
+          <Shimmer>
+            <CategoryColorMap />
+          </Shimmer>
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-2 col-span-5 flex justify-center items-center">
-          <ChartCard
-            headline="Expenses per category"
-            xAxisKey="name"
-            yAxisKey="expense"
-            chartData={categoryCountChartData}
-            colorMap={colorMap}
-            messages={categoryCountChartData.map(
-              (data) =>
-                `${data.name} has ${data.expense} expense${data.expense.length === 0 ? "" : "s"}`
-            )}
-          />
+        <div className="row-span-1 col-span-6 flex justify-center items-center">
+          <Shimmer>
+            <ChartCard
+              headline="Expenses per category"
+              xAxisKey="name"
+              yAxisKey="expense"
+              chartData={categoryCountChartData}
+              colorMap={colorMap}
+              messages={categoryCountChartData.map(
+                (data) =>
+                  `${data.name} has ${data.expense} expense${data.expense.length === 0 ? "" : "s"}`
+              )}
+            />
+          </Shimmer>
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-2 col-span-5 flex justify-center items-center">
-          <ChartCard
-            headline="Spendings per category"
-            xAxisKey="name"
-            yAxisKey="amount"
-            chartData={categorySpendingsChartData}
-            colorMap={colorMap}
-            messages={categorySpendingsChartData.map(
-              (data) => `You have spent $ ${formatNumber(data.amount)} on ${data.name}`
-            )}
-            isCountChart={false}
-          />
+        <div className="row-span-1 col-span-6 flex justify-center items-center">
+          <Shimmer>
+            <ChartCard
+              headline="Spendings per category"
+              xAxisKey="name"
+              yAxisKey="amount"
+              chartData={categorySpendingsChartData}
+              colorMap={colorMap}
+              messages={categorySpendingsChartData.map(
+                (data) => `You have spent $ ${formatNumber(data.amount)} on ${data.name}`
+              )}
+              isCountChart={false}
+            />
+          </Shimmer>
         </div>
       )}
     </div>

@@ -4,7 +4,7 @@ export default function CategoryColorMap() {
   const { categories } = useDataStore();
 
   return (
-    <ul className="flex flex-col gap-y-4 p-8 rounded-md w-full h-full bg-slate-800">
+    <ul className="flex flex-wrap justify-center gap-x-4 p-8 rounded-md w-full h-full bg-slate-800">
       {categories.map((category) => {
         return (
           <li key={category.id} className="flex items-center gap-x-2">
