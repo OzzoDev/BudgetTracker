@@ -16,17 +16,21 @@ export default function OverviewPage() {
   const hasExpenses = expenses && expenses.length > 0;
   const hasCategoires = categories && categories.length > 0;
 
-  const categoryCountChartData = categorizedExpenses.map((category) => ({
-    name: category.category,
-    expense: category.expenses.length,
-  }));
+  const categoryCountChartData = categorizedExpenses
+    .map((category) => ({
+      name: category.category,
+      expense: category.expenses.length,
+    }))
+    .sort((a, b) => b.expense - a.expense);
 
-  const categorySpendingsChartData = categorizedExpenses.map((category) => ({
-    name: category.category,
-    amount: category.expenses.reduce((acc, curr) => {
-      return (acc += curr.totalAmount);
-    }, 0),
-  }));
+  const categorySpendingsChartData = categorizedExpenses
+    .map((category) => ({
+      name: category.category,
+      amount: category.expenses.reduce((acc, curr) => {
+        return (acc += curr.totalAmount);
+      }, 0),
+    }))
+    .sort((a, b) => b.amount - a.amount);
 
   const colorMap = [...categories].map((category) => ({
     category: category.category,

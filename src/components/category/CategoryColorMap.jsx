@@ -1,11 +1,15 @@
 import useDataStore from "@/hooks/useDataStore";
 
 export default function CategoryColorMap() {
-  const { categories } = useDataStore();
+  const { categories, expenses } = useDataStore();
+
+  const categoriesInUse = [...categories].filter((category) => {
+    return expenses.some((exp) => exp.spendingCategory === category.category);
+  });
 
   return (
     <ul className="flex flex-wrap justify-center gap-x-4 p-8 rounded-md w-full h-full bg-slate-800">
-      {categories.map((category) => {
+      {categoriesInUse.map((category) => {
         return (
           <li key={category.id} className="flex items-center gap-x-2">
             <div
