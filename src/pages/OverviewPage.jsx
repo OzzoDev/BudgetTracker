@@ -4,11 +4,7 @@ import IncomeForm from "@/components/overview/IncomeForm";
 import ChartCard from "@/components/statistics/ChartCard";
 import useDataStore from "@/hooks/useDataStore";
 import Shimmer from "@/layouts/animations/Shimmer";
-import {
-  categorizeExpenses,
-  formatNumber,
-  getMonthlySpendingStats,
-} from "@/utils/helpers";
+import { categorizeExpenses, formatNumber, getMonthlySpendingStats } from "@/utils/helpers";
 
 export default function OverviewPage() {
   const { expenses, categories } = useDataStore();
@@ -47,39 +43,32 @@ export default function OverviewPage() {
       <div className="col-span-4 col-start-9 row-span-1 row-start-1 p-8 rounded-md bg-slate-800">
         <Shimmer>
           <h2 className="text-lg text-green-400 font-medium">
-            Welcome to the premier platform designed to help you track your
-            spending and establish savings goals to enhance your financial
-            well-being.
+            Welcome to the premier platform designed to help you track your spending and establish
+            savings goals to enhance your financial well-being.
           </h2>
           <div className="flex gap-x-2 p-2 mt-6">
             <p>💡</p>
             <p>
-              <span className="text-lg text-gray-400 font-medium">
-                Categories
-              </span>
-              <span> -</span> Create distinct categories and assign colors to
-              them, allowing you to easily group your expenses and view related
-              expenditures.
+              <span className="text-lg text-gray-400 font-medium">Categories</span>
+              <span> -</span> Create distinct categories and assign colors to them, allowing you to
+              easily group your expenses and view related expenditures.
             </p>
           </div>
           <div className="flex gap-x-2 p-2 mt-6">
             <p>💴</p>
             <p>
-              <span className="text-lg text-gray-400 font-medium">
-                Expenses
-              </span>
-              <span> -</span> Record your expenses and select the date of each
-              transaction. This will enable an assessment of your likelihood of
-              achieving your savings goals within the specified timeframe.
+              <span className="text-lg text-gray-400 font-medium">Expenses</span>
+              <span> -</span> Record your expenses and select the date of each transaction. This
+              will enable an assessment of your likelihood of achieving your savings goals within
+              the specified timeframe.
             </p>
           </div>
           <div className="flex gap-x-2 p-2 mt-6">
             <p>🎯</p>
             <p>
               <span className="text-lg text-gray-400 font-medium">Goals</span>
-              <span> -</span> By establishing a savings goal, you can easily
-              determine whether you will be able to save the desired amount
-              based on your income and expenses.
+              <span> -</span> By establishing a savings goal, you can easily determine whether you
+              will be able to save the desired amount based on your income and expenses.
             </p>
           </div>
         </Shimmer>
@@ -89,9 +78,7 @@ export default function OverviewPage() {
           <Shimmer>
             <SummaryCard
               value={montlySpendingsStats?.highest?.month}
-              percentage={`$ ${formatNumber(
-                montlySpendingsStats?.highest?.total
-              )}`}
+              percentage={`$ ${formatNumber(montlySpendingsStats?.highest?.total)}`}
               description="This is the month where your spending peaked, indicating the highest expenditure."
               isFavorable={false}
             />
@@ -99,9 +86,7 @@ export default function OverviewPage() {
           <Shimmer>
             <SummaryCard
               value={montlySpendingsStats?.average?.month}
-              percentage={`$ ${formatNumber(
-                montlySpendingsStats?.average?.total
-              )}`}
+              percentage={`$ ${formatNumber(montlySpendingsStats?.average?.total)}`}
               description="Your average monthly spending across all tracked months, providing a benchmark for budgeting."
               isFavorable={true}
             />
@@ -109,9 +94,7 @@ export default function OverviewPage() {
           <Shimmer>
             <SummaryCard
               value={montlySpendingsStats?.lowest?.month}
-              percentage={`$ ${formatNumber(
-                montlySpendingsStats?.lowest?.total
-              )}`}
+              percentage={`$ ${formatNumber(montlySpendingsStats?.lowest?.total)}`}
               description="This month reflects your lowest spending, showcasing your best budgeting performance."
               isFavorable={true}
             />
@@ -123,9 +106,7 @@ export default function OverviewPage() {
           <Shimmer>
             <SummaryCard
               value={montlySpendingsStats?.highest?.month}
-              percentage={`$ ${formatNumber(
-                montlySpendingsStats?.highest?.total
-              )}`}
+              percentage={`$ ${formatNumber(montlySpendingsStats?.highest?.total)}`}
               description="This is the month where your spending peaked, indicating the highest expenditure."
               isFavorable={false}
             />
@@ -137,9 +118,7 @@ export default function OverviewPage() {
           <Shimmer>
             <SummaryCard
               value={montlySpendingsStats?.average?.month}
-              percentage={`$ ${formatNumber(
-                montlySpendingsStats?.average?.total
-              )}`}
+              percentage={`$ ${formatNumber(montlySpendingsStats?.average?.total)}`}
               description="Your average monthly spending across all tracked months, providing a benchmark for budgeting."
               isFavorable={true}
             />
@@ -151,9 +130,7 @@ export default function OverviewPage() {
           <Shimmer>
             <SummaryCard
               value={montlySpendingsStats?.lowest?.month}
-              percentage={`$ ${formatNumber(
-                montlySpendingsStats?.lowest?.total
-              )}`}
+              percentage={`$ ${formatNumber(montlySpendingsStats?.lowest?.total)}`}
               description="This month reflects your lowest spending, showcasing your best budgeting performance."
               isFavorable={true}
             />
@@ -173,6 +150,10 @@ export default function OverviewPage() {
             yAxisKey="expense"
             chartData={categoryCountChartData}
             colorMap={colorMap}
+            messages={categoryCountChartData.map(
+              (data) =>
+                `${data.name} has ${data.expense} expense${data.expense.length === 0 ? "" : "s"}`
+            )}
           />
         </div>
       )}
@@ -184,6 +165,9 @@ export default function OverviewPage() {
             yAxisKey="amount"
             chartData={categorySpendingsChartData}
             colorMap={colorMap}
+            messages={categorySpendingsChartData.map(
+              (data) => `You have spent $ ${formatNumber(data.amount)} on ${data.name}`
+            )}
           />
         </div>
       )}
