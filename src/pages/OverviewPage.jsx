@@ -1,3 +1,4 @@
+import CategoryColorMap from "@/components/category/CategoryColorMap";
 import SummaryCard from "@/components/dashboard/SummaryCard";
 import IncomeForm from "@/components/overview/IncomeForm";
 import ChartCard from "@/components/statistics/ChartCard";
@@ -17,6 +18,7 @@ export default function OverviewPage() {
   const categorizedExpenses = categorizeExpenses(expenses);
 
   const hasExpenses = expenses && expenses.length > 0;
+  const hasCategoires = categories && categories.length > 0;
 
   const categoryCountChartData = categorizedExpenses.map((category) => ({
     name: category.category,
@@ -36,13 +38,13 @@ export default function OverviewPage() {
   }));
 
   return (
-    <div className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] grid-rows-[repeat(10,1fr)] gap-8 lg:min-h-screen p-8">
-      <div className="col-span-8 row-span-3 row-start-1">
+    <div className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] grid-rows-[repeat(1,1fr)] gap-8 lg:min-h-screen p-8">
+      <div className="col-span-8 row-span-1 row-start-1">
         <Shimmer>
           <IncomeForm />
         </Shimmer>
       </div>
-      <div className="col-span-4 col-start-9 row-span-3 row-start-1 p-8 rounded-md bg-slate-800">
+      <div className="col-span-4 col-start-9 row-span-1 row-start-1 p-8 rounded-md bg-slate-800">
         <Shimmer>
           <h2 className="text-lg text-green-400 font-medium">
             Welcome to the premier platform designed to help you track your
@@ -117,7 +119,7 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="hidden lg:block col-span-4 row-span-1 row-start-4">
+        <div className="hidden lg:block col-span-4 row-span-1 row-start-2">
           <Shimmer>
             <SummaryCard
               value={montlySpendingsStats?.highest?.month}
@@ -131,7 +133,7 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="hidden lg:block col-span-4 row-span-1 row-start-4">
+        <div className="hidden lg:block col-span-4 row-span-1 row-start-2">
           <Shimmer>
             <SummaryCard
               value={montlySpendingsStats?.average?.month}
@@ -145,7 +147,7 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="hidden lg:block col-span-4 row-span-1 row-start-4">
+        <div className="hidden lg:block col-span-4 row-span-1 row-start-2">
           <Shimmer>
             <SummaryCard
               value={montlySpendingsStats?.lowest?.month}
@@ -158,8 +160,13 @@ export default function OverviewPage() {
           </Shimmer>
         </div>
       )}
+      {hasCategoires && (
+        <div className="row-span-1 row-start-3 col-span-2 col-start-1">
+          <CategoryColorMap />
+        </div>
+      )}
       {hasExpenses && (
-        <div className="row-span-2 row-start-5 col-span-6 col-start-1 flex justify-center items-center">
+        <div className="row-span-1 row-start-3 col-span-5 col-start-3 flex justify-center items-center">
           <ChartCard
             headline="Expenses per category"
             xAxisKey="name"
@@ -170,7 +177,7 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-2 row-start-5 col-span-6 col-start-7 flex justify-center items-center">
+        <div className="row-span-1 row-start-3 col-span-5 col-start-8 flex justify-center items-center">
           <ChartCard
             headline="Spendings per category"
             xAxisKey="name"
