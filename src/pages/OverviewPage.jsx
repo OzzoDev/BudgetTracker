@@ -1,6 +1,4 @@
 import SummaryCard from "@/components/dashboard/SummaryCard";
-import CategoryCountChart from "@/components/overview/CategoryCountChart";
-import CategorySpendingsChart from "@/components/overview/CategorySpendingsChart";
 import IncomeForm from "@/components/overview/IncomeForm";
 import ChartCard from "@/components/statistics/ChartCard";
 import useDataStore from "@/hooks/useDataStore";
@@ -12,7 +10,7 @@ import {
 } from "@/utils/helpers";
 
 export default function OverviewPage() {
-  const { expenses } = useDataStore();
+  const { expenses, categories } = useDataStore();
 
   const montlySpendingsStats = getMonthlySpendingStats(expenses);
 
@@ -30,6 +28,11 @@ export default function OverviewPage() {
     amount: category.expenses.reduce((acc, curr) => {
       return (acc += curr.totalAmount);
     }, 0),
+  }));
+
+  const colorMap = [...categories].map((category) => ({
+    category: category.category,
+    color: category.color,
   }));
 
   return (
@@ -156,22 +159,24 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-2 row-start-5 col-span-6 col-start-1 flex justify-center items-center p-8 rounded-md bg-slate-800">
+        <div className="row-span-2 row-start-5 col-span-6 col-start-1 flex justify-center items-center">
           <ChartCard
             headline="Expenses per category"
             xAxisKey="name"
             yAxisKey="expense"
             chartData={categoryCountChartData}
+            colorMap={colorMap}
           />
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-2 row-start-5 col-span-6 col-start-7 flex justify-center items-center p-8 rounded-md bg-slate-800">
+        <div className="row-span-2 row-start-5 col-span-6 col-start-7 flex justify-center items-center">
           <ChartCard
             headline="Spendings per category"
             xAxisKey="name"
             yAxisKey="amount"
             chartData={categorySpendingsChartData}
+            colorMap={colorMap}
           />
         </div>
       )}
