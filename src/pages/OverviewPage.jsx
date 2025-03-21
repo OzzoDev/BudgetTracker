@@ -2,12 +2,13 @@ import CategoryColorMap from "@/components/category/CategoryColorMap";
 import SummaryCard from "@/components/dashboard/SummaryCard";
 import IncomeForm from "@/components/overview/IncomeForm";
 import ChartCard from "@/components/statistics/ChartCard";
+import PieChartCard from "@/components/statistics/PieChartCard";
 import useDataStore from "@/hooks/useDataStore";
 import Shimmer from "@/layouts/animations/Shimmer";
 import { categorizeExpenses, formatNumber, getMonthlySpendingStats } from "@/utils/helpers";
 
 export default function OverviewPage() {
-  const { expenses, categories } = useDataStore();
+  const { pay, expenses, categories } = useDataStore();
 
   const montlySpendingsStats = getMonthlySpendingStats(expenses);
 
@@ -37,9 +38,16 @@ export default function OverviewPage() {
     color: category.color,
   }));
 
+  const monthlySpendingsChartData = getMonthlySpendingStats(expenses)?.monthlyStats;
+
+  const monthlySavingsChartData = getMonthlySpendingStats(expenses)?.monthlyStats?.map((exp) => ({
+    ...exp,
+    total: pay - exp.total,
+  }));
+
   return (
     <div
-      style={{ gridTemplateRows: "1fr 1fr 1fr minmax(100px, auto) 400px" }}
+      style={{ gridTemplateRows: "1fr 1fr 1fr minmax(100px, auto) 400px 400px" }}
       className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] gap-8 lg:min-h-screen p-8">
       <div className="col-span-9 row-span-2">
         <Shimmer>
@@ -180,6 +188,34 @@ export default function OverviewPage() {
                 (data) => `You have spent $ ${formatNumber(data.amount)} on ${data.name}`
               )}
               isCountChart={false}
+            />
+          </Shimmer>
+        </div>
+      )}
+      {hasExpenses && (
+        <div className="row-span-1 col-span-6 flex justify-center items-center">
+          <Shimmer>
+            <PieChartCard
+              headline="Monthly expenses"
+              chartData={monthlySpendingsChartData}
+              colorMap={colorMap}
+              messages={monthlySpendingsChartData.map(
+                (data) => `In ${data.month} you spent/have spent $ ${formatNumber(data.total)}`
+              )}
+            />
+          </Shimmer>
+        </div>
+      )}
+      {hasExpenses && (
+        <div className="row-span-1 col-span-6 flex justify-center items-center">
+          <Shimmer>
+            <PieChartCard
+              headline="Monthly savings"
+              chartData={monthlySavingsChartData}
+              colorMap={colorMap}
+              messages={monthlySavingsChartData.map(
+                (data) => `In ${data.month} are saving/did saved $ ${formatNumber(data.total)}`
+              )}
             />
           </Shimmer>
         </div>

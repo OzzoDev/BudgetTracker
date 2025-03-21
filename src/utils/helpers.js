@@ -144,6 +144,7 @@ export function getMonthlySpendingStats(expenses) {
       month: capitalize(lowest.month),
       total: lowest.total,
     },
+    monthlyStats,
   };
 }
 
