@@ -9,11 +9,18 @@ const initialState = {
   error: null,
 };
 
-export const fetchStocks = createAsyncThunk("stocks/fetchStocks", async () => {
+export const fetchStocks = createAsyncThunk("stocks/fetchStockSymbols", async (_, { getState }) => {
+  const state = getState();
+
+  if (state.stocks.stocks.length > 0) {
+    return state.stocks.stocks;
+  }
+
   const response = await axios.get(
-    `https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?apiKey=${STOCK_API_KEY}`
+    `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${STOCK_API_KEY}`
   );
-  return response.data;
+
+  return response.data.slice(0, 10);
 });
 
 const stockSlice = createSlice({
@@ -27,7 +34,7 @@ const stockSlice = createSlice({
       })
       .addCase(fetchStocks.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || "Fetching stocks failed";
+        state.error = action.error.message || "Fetching stock symbols failed";
       })
       .addCase(fetchStocks.fulfilled, (state, action) => {
         state.isLoading = false;
