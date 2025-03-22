@@ -33,7 +33,7 @@ export default function GoalsPage() {
 
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[repeat(14,1fr)] lg:grid-rows-[repeat(6,1fr)] gap-8 lg:min-h-screen p-8">
-      <div className="lg:hidden grid grid-cols-[repeat(3,1fr)] gap-8 overflow-x-auto">
+      <div className="lg:hidden grid grid-cols-[repeat(3,1fr)] gap-8 overflow-x-auto min-h-[180px]">
         <Shimmer>
           <SummaryCard
             value={reachableGoals.length}
@@ -88,17 +88,17 @@ export default function GoalsPage() {
         </Shimmer>
       </div>
       <div className="lg:row-start-2 lg:col-start-1 lg:col-span-10 lg:row-span-3">
-        <Shimmer>
+        <Shimmer minHeight={1000}>
           <GoalsForm />
         </Shimmer>
       </div>
       <div className="lg:row-start-5 lg:col-start-1 lg:col-span-10 lg:row-span-8">
-        <Shimmer>
+        <Shimmer minHeight={500}>
           <GoalsRecord />
         </Shimmer>
       </div>
       <div className="col-span-4 col-start-11 row-start-1 row-span-12">
-        <Shimmer>
+        <Shimmer minHeight={1200}>
           <GoalsOverview />
         </Shimmer>
       </div>

@@ -57,7 +57,7 @@ export default function GoalsOverview() {
             <div className="p-4 pb-8 rounded-md shadow-xl">
               <div className="flex justify-between mb-4">
                 <p className="text-lg text-green-500">Most reachable goal</p>
-                <div className="p-2 rounded-md bg-gray-900 bg-opacity-40">
+                <div className="p-2 rounded-md bg-gray-900 bg-opacity-40 h-fit">
                   <GoArrowUp size={24} color="green" />
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default function GoalsOverview() {
             <div className="p-4 pb-8 rounded-md shadow-xl">
               <div className="flex justify-between mb-4">
                 <p className="text-lg text-red-500">Least reachable goal</p>
-                <div className="p-2 rounded-md bg-gray-900 bg-opacity-40">
+                <div className="p-2 rounded-md bg-gray-900 bg-opacity-40 h-fit">
                   <GoArrowDown size={24} color="red" />
                 </div>
               </div>

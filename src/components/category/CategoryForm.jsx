@@ -95,7 +95,7 @@ export default function CategoryForm() {
         <div className="flex justify-between w-full">
           <h2 className="text-2xl text-gray-300">Create new category</h2>
         </div>
-        <div className="flex flex-col items-start gap-y-16 px-12">
+        <div className="flex flex-col items-start gap-y-16 md:px-12">
           <FormField
             control={formMethods.control}
             name="category"

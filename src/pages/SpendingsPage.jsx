@@ -37,7 +37,7 @@ export default function SpendingsPage() {
 
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[repeat(14,1fr)] lg:grid-rows-[repeat(6,1fr)] gap-8 lg:min-h-screen p-8">
-      <div className="lg:hidden grid grid-cols-[repeat(3,1fr)] gap-8 overflow-x-auto">
+      <div className="lg:hidden grid grid-cols-[repeat(3,1fr)] gap-8 overflow-x-auto min-h-[180px]">
         <Shimmer>
           <SummaryCard
             value={`$ ${formatNumber(totalExpenseAmount)}`}
@@ -63,7 +63,7 @@ export default function SpendingsPage() {
         </Shimmer>
       </div>
       <div className="hidden lg:block col-span-3 col-start-1 row-span-1">
-        <Shimmer>
+        <Shimmer minHeight={225}>
           <SummaryCard
             value={`$ ${formatNumber(totalExpenseAmount)}`}
             percentage={`${percentageUsedIncome}%`}
@@ -73,7 +73,7 @@ export default function SpendingsPage() {
         </Shimmer>
       </div>
       <div className="hidden lg:block col-span-3 col-start-4 row-span-1">
-        <Shimmer>
+        <Shimmer minHeight={225}>
           <SummaryCard
             value={formattedSpendingPace}
             percentage={`$ ${averageSpendingAmount} average spending`}
@@ -83,7 +83,7 @@ export default function SpendingsPage() {
         </Shimmer>
       </div>
       <div className="hidden lg:block col-span-3 col-start-7 row-span-1">
-        <Shimmer>
+        <Shimmer minHeight={225}>
           <InfoCard
             headline={numExpenses}
             description="Total number of added expenses"
@@ -92,17 +92,17 @@ export default function SpendingsPage() {
         </Shimmer>
       </div>
       <div className="lg:row-start-2 lg:col-start-1 lg:col-span-9 lg:row-span-3">
-        <Shimmer>
+        <Shimmer minHeight={900}>
           <SpendingsForm />
         </Shimmer>
       </div>
       <div className="lg:row-start-5 lg:col-start-1 lg:col-span-9 lg:row-span-8">
-        <Shimmer>
+        <Shimmer minHeight={900}>
           <SpendingsRecord />
         </Shimmer>
       </div>
       <div className="col-span-5 row-start-1 row-span-12">
-        <Shimmer>
+        <Shimmer minHeight={900}>
           <SpendingsCategroySummary />
         </Shimmer>
       </div>

@@ -98,7 +98,7 @@ export default function SpendingsForm() {
         <div className="flex justify-between w-full">
           <h2 className="text-2xl text-gray-300">Add new expense</h2>
         </div>
-        <div className="flex flex-col-reverse md:flex-row items-center gap-16 justify-between px-12">
+        <div className="flex flex-col-reverse md:flex-row items-center gap-16 justify-between md:px-12">
           <div className="flex flex-col gap-y-16 w-full">
             <FormField
               control={control}

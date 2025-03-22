@@ -50,7 +50,7 @@ export default function SpendingsCategroySummary() {
             <div className="p-4 pb-8 rounded-md shadow-xl">
               <div className="flex justify-between mb-4">
                 <p className="text-lg text-red-500">Highest spending category</p>
-                <div className="p-2 rounded-md bg-gray-900 bg-opacity-40">
+                <div className="p-2 rounded-md bg-gray-900 bg-opacity-40 h-fit">
                   <GoArrowUp size={24} color="red" />
                 </div>
               </div>
@@ -68,7 +68,7 @@ export default function SpendingsCategroySummary() {
             <div className="flex flex-col gap-y-2 p-4 pb-8 rounded-md shadow-xl">
               <div className="flex justify-between mb-4">
                 <p className="text-lg text-green-500">Lowest spending category</p>
-                <div className="p-2 rounded-md bg-gray-900 bg-opacity-40">
+                <div className="p-2 rounded-md bg-gray-900 bg-opacity-40 h-fit">
                   <GoArrowDown size={24} color="green" />
                 </div>
               </div>
