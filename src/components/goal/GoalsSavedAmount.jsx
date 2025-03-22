@@ -3,16 +3,16 @@ import { calcTotalIncome, formatNumber } from "@/utils/helpers";
 export default function GoalsSavedAmount({ goal, pay, savedAmount, percentage }) {
   const totalIncome = calcTotalIncome(goal, pay).totalIncome;
 
-  const remaining = goal.target - (totalIncome - savedAmount);
+  const remaining = Math.round(goal.target - (totalIncome - savedAmount));
 
-  const moneyLeft = totalIncome - savedAmount - goal.target;
+  const moneyLeft = Math.round(totalIncome - savedAmount - goal.target);
 
   const isGoalReached = remaining <= 0;
 
   return (
     <div>
       <div className="flex items-center gap-x-2">
-        <p>$ {formatNumber(totalIncome - savedAmount)}</p>
+        <p>$ {formatNumber(Math.round(totalIncome - savedAmount))}</p>
         <p>/</p>
         <p>$ {formatNumber(goal.target)}</p>
         <p>({percentage * 100}%)</p>

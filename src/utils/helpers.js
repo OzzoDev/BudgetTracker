@@ -34,17 +34,19 @@ export function calcGoalProgression(goal, expenses, pay) {
 
   const totalIncome = calcTotalIncome(goal, pay).totalIncome;
 
-  const totalAmount = expenses.reduce((acc, curr) => {
-    const dateSpent = new Date(curr.dateSpent);
+  const totalAmount = Math.round(
+    expenses.reduce((acc, curr) => {
+      const dateSpent = new Date(curr.dateSpent);
 
-    const isWithinTimeSpan = dateSpent >= startDate && dateSpent <= endDate;
+      const isWithinTimeSpan = dateSpent >= startDate && dateSpent <= endDate;
 
-    if (isWithinTimeSpan) {
-      return (acc += curr.totalAmount);
-    }
+      if (isWithinTimeSpan) {
+        return (acc += curr.totalAmount);
+      }
 
-    return acc;
-  }, 0);
+      return acc;
+    }, 0)
+  );
 
   const percentage = Math.round(((totalIncome - totalAmount) / goal.target) * 100) / 100;
 
@@ -60,7 +62,7 @@ export function calcTotalIncome(goal, pay) {
   const end = new Date(goal.endDate);
   const numDays = (end - start) / (1000 * 60 * 60 * 24);
   const dailyIncome = pay / 30;
-  const totalIncome = dailyIncome * numDays;
+  const totalIncome = Math.round(dailyIncome * numDays);
 
   return {
     goal,

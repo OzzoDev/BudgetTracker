@@ -18,14 +18,34 @@ export default function GoalsOverview() {
     .map((goal) => (calcGoalProgression(goal, expenses, pay).percentage >= 1 ? goal : null))
     .filter((goal) => goal);
 
-  const highestGoal = sortedGoals.length > 0 ? sortedGoals[0] : null;
-  const lowestGoal = sortedGoals.length > 1 ? sortedGoals[sortedGoals.length - 1] : null;
+  const sortedGoalsByProgression = [...sortedGoals].sort((a, b) => {
+    const totalIncome = calcTotalIncome(a, pay).totalIncome;
+    const totalAmountA = calcGoalProgression(a, expenses, pay).totalAmount;
+    const totalAmountB = calcGoalProgression(b, expenses, pay).totalAmount;
+
+    const progressionA = Math.abs(totalIncome - totalAmountA - a.target);
+    const progressionB = Math.abs(totalIncome - totalAmountB - b.target);
+
+    return progressionA - progressionB;
+  });
+
+  const highestGoal = sortedGoalsByProgression.length > 0 ? sortedGoalsByProgression[0] : null;
+  const lowestGoal =
+    sortedGoalsByProgression.length > 1
+      ? sortedGoalsByProgression[sortedGoalsByProgression.length - 1]
+      : null;
 
   const highestGoalProgression =
-    sortedGoals.length > 0 ? calcGoalProgression(sortedGoals[0], expenses, pay) : 0;
+    sortedGoalsByProgression.length > 0
+      ? calcGoalProgression(sortedGoalsByProgression[0], expenses, pay)
+      : 0;
   const lowestGoalProgression =
-    sortedGoals.length > 1
-      ? calcGoalProgression(sortedGoals[sortedGoals.length - 1], expenses, pay)
+    sortedGoalsByProgression.length > 1
+      ? calcGoalProgression(
+          sortedGoalsByProgression[sortedGoalsByProgression.length - 1],
+          expenses,
+          pay
+        )
       : 0;
 
   const noGoals = goals.length === 0;
@@ -66,7 +86,7 @@ export default function GoalsOverview() {
           {lowestGoal && (
             <div className="p-4 pb-8 rounded-md shadow-xl">
               <div className="flex justify-between mb-4">
-                <p className="text-lg text-red-500">Most unreachable goal</p>
+                <p className="text-lg text-red-500">Least reachable goal</p>
                 <div className="p-2 rounded-md bg-gray-900 bg-opacity-40">
                   <GoArrowDown size={24} color="red" />
                 </div>
@@ -99,7 +119,7 @@ export default function GoalsOverview() {
       )}
       {!noGoals && <p className="text-xl text-gray-400 my-12">Savings goals overview</p>}
       <ul className="flex flex-col gap-y-12 px-4 pb-8 max-h-[1100px] overflow-y-auto">
-        {[...sortedGoals, ...reachedGoals].map((goal) => {
+        {[...sortedGoalsByProgression, ...reachedGoals].map((goal) => {
           return (
             <div key={goal.id}>
               <p className="flex gap-x-2">

@@ -5,10 +5,16 @@ import ChartCard from "@/components/statistics/ChartCard";
 import PieChartCard from "@/components/statistics/PieChartCard";
 import useDataStore from "@/hooks/useDataStore";
 import Shimmer from "@/layouts/animations/Shimmer";
-import { categorizeExpenses, formatNumber, getMonthlySpendingStats } from "@/utils/helpers";
+import {
+  calcGoalProgression,
+  calcTotalIncome,
+  categorizeExpenses,
+  formatNumber,
+  getMonthlySpendingStats,
+} from "@/utils/helpers";
 
 export default function OverviewPage() {
-  const { pay, expenses, categories } = useDataStore();
+  const { pay, expenses, categories, goals } = useDataStore();
 
   const montlySpendingsStats = getMonthlySpendingStats(expenses);
 
@@ -44,6 +50,15 @@ export default function OverviewPage() {
     ...exp,
     total: pay - exp.total,
   }));
+
+  const sortedGoals = [...goals].map((goal) => ({
+    value:
+      calcTotalIncome(goal, pay).totalIncome - calcGoalProgression(goal, expenses, pay).totalAmount,
+    target: goal.target,
+  }));
+  // .map((income) => goals.find((goa) => goa.id === income.goal.id));
+
+  console.log(sortedGoals);
 
   return (
     <div
@@ -196,11 +211,11 @@ export default function OverviewPage() {
         <div className="row-span-1 col-span-6 flex justify-center items-center">
           <Shimmer>
             <PieChartCard
-              headline="Monthly expenses"
+              headline="Monthly spendings"
               chartData={monthlySpendingsChartData}
               colorMap={colorMap}
               messages={monthlySpendingsChartData.map(
-                (data) => `In ${data.month} you spent/have spent $ ${formatNumber(data.total)}`
+                (data) => `${data.month} spendings: $ ${formatNumber(data.total)}`
               )}
               labelColor="#F87171"
             />
@@ -215,7 +230,7 @@ export default function OverviewPage() {
               chartData={monthlySavingsChartData}
               colorMap={colorMap}
               messages={monthlySavingsChartData.map(
-                (data) => `In ${data.month} are saving/did saved $ ${formatNumber(data.total)}`
+                (data) => `${data.month} savings: $ ${formatNumber(data.total)}`
               )}
               labelColor="#34D399"
             />

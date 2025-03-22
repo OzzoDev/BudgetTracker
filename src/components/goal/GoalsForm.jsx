@@ -169,6 +169,7 @@ export default function GoalsForm() {
                       <Input
                         type="number"
                         placeholder="Enter saving goal"
+                        min={1}
                         {...field}
                         onChange={(e) => {
                           const value = e.target.value;
