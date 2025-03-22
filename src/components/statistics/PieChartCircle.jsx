@@ -1,10 +1,9 @@
 import { formatNumber } from "@/utils/helpers";
 import React from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import CustomTooltip from "./CustomTooltip";
 import CustomTooltipPieChart from "./CustomTooltipPieChart";
 
-export default function PieChartCircle({ chartData, colorMap, messages }) {
+export default function PieChartCircle({ chartData, colorMap, messages, labelColor = "#FFFFFF" }) {
   const formattedData = chartData.map((data) => ({
     name: data.month,
     value: data.total,
@@ -20,7 +19,7 @@ export default function PieChartCircle({ chartData, colorMap, messages }) {
       <text
         x={x}
         y={y}
-        fill="#FFFFFF"
+        fill={labelColor}
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
         fontSize="13px"
@@ -34,7 +33,7 @@ export default function PieChartCircle({ chartData, colorMap, messages }) {
     <ResponsiveContainer width="100%">
       <PieChart>
         <Pie data={formattedData} labelLine={false} dataKey="value" label={renderLabel}>
-          {formattedData.map((entry, index) => (
+          {formattedData.map((_, index) => (
             <Cell key={`cell-${index}`} fill={colorMap[index]?.color || "#8884d8"} />
           ))}
         </Pie>

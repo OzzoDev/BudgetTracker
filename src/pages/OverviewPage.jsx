@@ -202,6 +202,7 @@ export default function OverviewPage() {
               messages={monthlySpendingsChartData.map(
                 (data) => `In ${data.month} you spent/have spent $ ${formatNumber(data.total)}`
               )}
+              labelColor="#F87171"
             />
           </Shimmer>
         </div>
@@ -216,6 +217,7 @@ export default function OverviewPage() {
               messages={monthlySavingsChartData.map(
                 (data) => `In ${data.month} are saving/did saved $ ${formatNumber(data.total)}`
               )}
+              labelColor="#34D399"
             />
           </Shimmer>
         </div>
