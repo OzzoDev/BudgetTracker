@@ -22,8 +22,13 @@ export default function OverviewPage() {
 
   const categorizedExpenses = categorizeExpenses(expenses);
 
+  const categoriesInUse = [...categories].filter((category) => {
+    return expenses.some((exp) => exp.spendingCategory === category.category);
+  });
+
   const hasExpenses = expenses && expenses.length > 0;
-  const hasCategoires = categories && categories.length > 0;
+  const hasCategoires = categoriesInUse && categoriesInUse.length > 0;
+  const hasGoals = goals && goals.length > 0;
 
   const categoryCountChartData = categorizedExpenses
     .map((category) => ({
@@ -88,8 +93,16 @@ export default function OverviewPage() {
     goal: goal,
   }));
 
+  const gridRows =
+    hasExpenses && hasGoals
+      ? "repeat(3,1fr)_minmax(100px,auto)_repeat(3,400px)"
+      : hasExpenses || hasGoals
+      ? "repeat(3,1fr)_minmax(100px,auto)_repeat(2,400px)"
+      : "repeat(3,1fr)_minmax(100px,auto)";
+
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-[repeat(12,1fr)] lg:grid-rows-[repeat(3,1fr)_minmax(100px,auto)_repeat(3,400px)] gap-8 lg:min-h-screen p-8">
+    <div
+      className={`flex flex-col lg:grid lg:grid-cols-[repeat(12,1fr)] lg:grid-rows-[${gridRows}] gap-8 lg:min-h-screen p-8`}>
       <div className="col-span-9 row-span-2">
         <Shimmer minHeight={325}>
           <IncomeForm />
@@ -156,7 +169,7 @@ export default function OverviewPage() {
           </Shimmer>
         </div>
       )}
-      {hasExpenses && (
+      {hasExpenses ? (
         <div className="hidden lg:block col-span-3 row-span-1">
           <Shimmer>
             <SummaryCard
@@ -167,8 +180,18 @@ export default function OverviewPage() {
             />
           </Shimmer>
         </div>
+      ) : (
+        <div className="hidden lg:block col-span-3 row-span-1">
+          <Shimmer>
+            <SummaryCard
+              value="No expenses"
+              description="This is the month where your spending peaked, indicating the highest expenditure."
+              isFavorable={false}
+            />
+          </Shimmer>
+        </div>
       )}
-      {hasExpenses && (
+      {hasExpenses ? (
         <div className="hidden lg:block col-span-3 row-span-1">
           <Shimmer>
             <SummaryCard
@@ -179,8 +202,18 @@ export default function OverviewPage() {
             />
           </Shimmer>
         </div>
+      ) : (
+        <div className="hidden lg:block col-span-3 row-span-1">
+          <Shimmer>
+            <SummaryCard
+              value="No expenses"
+              description="Your average monthly spending across all tracked months, providing a benchmark for budgeting."
+              isFavorable={false}
+            />
+          </Shimmer>
+        </div>
       )}
-      {hasExpenses && (
+      {hasExpenses ? (
         <div className="hidden lg:block col-span-3 row-span-1">
           <Shimmer>
             <SummaryCard
@@ -188,6 +221,16 @@ export default function OverviewPage() {
               percentage={`$ ${formatNumber(montlySpendingsStats?.lowest?.total)}`}
               description="This month reflects your lowest spending, showcasing your best budgeting performance."
               isFavorable={true}
+            />
+          </Shimmer>
+        </div>
+      ) : (
+        <div className="hidden lg:block col-span-3 row-span-1">
+          <Shimmer>
+            <SummaryCard
+              value="No expenses"
+              description="This month reflects your lowest spending, showcasing your best budgeting performance."
+              isFavorable={false}
             />
           </Shimmer>
         </div>
@@ -263,7 +306,7 @@ export default function OverviewPage() {
           </Shimmer>
         </div>
       )}
-      {hasExpenses && (
+      {hasExpenses && hasGoals && (
         <div className="row-span-1 col-span-6 flex justify-center items-center h-[400px]">
           <Shimmer>
             <TargetedBarChartCard
@@ -280,7 +323,7 @@ export default function OverviewPage() {
           </Shimmer>
         </div>
       )}
-      {hasExpenses && (
+      {hasExpenses && hasGoals && (
         <div className="row-span-1 col-span-6 flex justify-center items-center h-[400px]">
           <Shimmer>
             <PieChartCard

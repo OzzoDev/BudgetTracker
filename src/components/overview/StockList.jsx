@@ -4,8 +4,6 @@ import React from "react";
 export default function StockList() {
   const { stocks, isLoading, error } = useStockStore();
 
-  console.log(stocks);
-
   return (
     <div className="p-8 rounded-md bg-slate-800">
       <h2 className="text-2xl text-gray-400 mb-8">Popular stocks to boost your savings</h2>
