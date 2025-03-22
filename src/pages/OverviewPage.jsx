@@ -1,6 +1,7 @@
 import CategoryColorMap from "@/components/category/CategoryColorMap";
 import SummaryCard from "@/components/dashboard/SummaryCard";
 import IncomeForm from "@/components/overview/IncomeForm";
+import StockList from "@/components/overview/StockList";
 import ChartCard from "@/components/statistics/ChartCard";
 import PieChartCard from "@/components/statistics/PieChartCard";
 import TargetedBarChartCard from "@/components/statistics/TargetedBarChartCard";
@@ -301,6 +302,11 @@ export default function OverviewPage() {
           </Shimmer>
         </div>
       )}
+      <div className="col-span-12">
+        <Shimmer minHeight={600}>
+          <StockList />
+        </Shimmer>
+      </div>
     </div>
   );
 }
