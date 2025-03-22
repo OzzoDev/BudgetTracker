@@ -1,8 +1,8 @@
-export default function CustomTooltip({ active, payload, messages, chartData, xAxisKey }) {
+export default function CustomTooltip({ active, payload, messages, chartData, indexKey }) {
   if (active && payload && payload.length) {
     const currentDataPoint = payload[0].payload;
 
-    const index = chartData.findIndex((item) => item[xAxisKey] === currentDataPoint[xAxisKey]);
+    const index = chartData.findIndex((item) => item[indexKey] === currentDataPoint[indexKey]);
 
     const message = index >= 0 ? messages[index] : "No message available";
 

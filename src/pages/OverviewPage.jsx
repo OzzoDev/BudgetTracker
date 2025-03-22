@@ -3,6 +3,7 @@ import SummaryCard from "@/components/dashboard/SummaryCard";
 import IncomeForm from "@/components/overview/IncomeForm";
 import ChartCard from "@/components/statistics/ChartCard";
 import PieChartCard from "@/components/statistics/PieChartCard";
+import TargetedBarChartCard from "@/components/statistics/TargetedBarChartCard";
 import useDataStore from "@/hooks/useDataStore";
 import Shimmer from "@/layouts/animations/Shimmer";
 import {
@@ -51,18 +52,28 @@ export default function OverviewPage() {
     total: pay - exp.total,
   }));
 
-  const sortedGoals = [...goals].map((goal) => ({
-    value:
-      calcTotalIncome(goal, pay).totalIncome - calcGoalProgression(goal, expenses, pay).totalAmount,
-    target: goal.target,
-  }));
-  // .map((income) => goals.find((goa) => goa.id === income.goal.id));
+  const savingsGoals = [...goals]
+    .map((goal) => ({
+      value:
+        calcTotalIncome(goal, pay).totalIncome -
+        calcGoalProgression(goal, expenses, pay).totalAmount,
+      target: goal.target,
+    }))
+    .sort((a, b) => {
+      const totalIncome = calcTotalIncome(a, pay).totalIncome;
+      const totalAmountA = calcGoalProgression(a, expenses, pay).totalAmount;
+      const totalAmountB = calcGoalProgression(b, expenses, pay).totalAmount;
 
-  console.log(sortedGoals);
+      const progressionA = Math.abs(totalIncome - totalAmountA - a.target);
+      const progressionB = Math.abs(totalIncome - totalAmountB - b.target);
+
+      return progressionA - progressionB;
+    })
+    .reverse();
 
   return (
     <div
-      style={{ gridTemplateRows: "1fr 1fr 1fr minmax(100px, auto) 400px 400px" }}
+      style={{ gridTemplateRows: "1fr 1fr 1fr minmax(100px, auto) 400px 400px 400px" }}
       className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] gap-8 lg:min-h-screen p-8">
       <div className="col-span-9 row-span-2">
         <Shimmer>
@@ -233,6 +244,23 @@ export default function OverviewPage() {
                 (data) => `${data.month} savings: $ ${formatNumber(data.total)}`
               )}
               labelColor="#34D399"
+            />
+          </Shimmer>
+        </div>
+      )}
+      {hasExpenses && (
+        <div className="row-span-1 col-span-6 flex justify-center items-center">
+          <Shimmer>
+            <TargetedBarChartCard
+              headline="Savings goals"
+              chartData={savingsGoals}
+              messages={savingsGoals.map(
+                (data) =>
+                  `Savings: $ ${formatNumber(data.value)} / $ ${formatNumber(
+                    data.target
+                  )} (${Math.round((data.value / data.target) * 100)}%)`
+              )}
+              isCountChart={false}
             />
           </Shimmer>
         </div>

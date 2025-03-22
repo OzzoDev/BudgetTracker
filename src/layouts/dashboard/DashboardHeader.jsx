@@ -36,7 +36,9 @@ export default function DashboardHeader() {
     <nav className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-y-4 py-4 px-8 bg-slate-800">
       <div>
         <h1 className="text-2xl text-blue-300 font-semibold">Budget Tracker</h1>
-        <h2 className="text-lg text-white">$ {formatNumber(pay)}</h2>
+        <h2 className="text-lg text-white">
+          <span className="mr-2 text-gray-300">Income</span>$ {formatNumber(pay)}
+        </h2>
       </div>
       <ul className="flex gap-x-4 lg:gap-x-8">
         {LINKS.map((link, index) => {

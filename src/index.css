@@ -12,6 +12,11 @@
   filter: invert(1);
 }
 
+/* .recharts-tooltip-cursor {
+  fill: red;
+  background-color: red;
+} */
+
 @layer base {
   :root {
     --background: 0 0% 100%;

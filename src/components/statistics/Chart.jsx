@@ -25,7 +25,7 @@ export default function Chart({
         <CartesianGrid />
         <YAxis tickFormatter={(value) => formatYAxisTick(value)} />
         <Tooltip
-          content={<CustomTooltip messages={messages} chartData={chartData} xAxisKey={xAxisKey} />}
+          content={<CustomTooltip messages={messages} chartData={chartData} indexKey={xAxisKey} />}
         />
         <Bar dataKey={yAxisKey}>
           {chartData.map((entry, index) => (

@@ -15,7 +15,7 @@ export default function GoalsSavedAmount({ goal, pay, savedAmount, percentage })
         <p>$ {formatNumber(Math.round(totalIncome - savedAmount))}</p>
         <p>/</p>
         <p>$ {formatNumber(goal.target)}</p>
-        <p>({percentage * 100}%)</p>
+        <p>({Math.round(percentage * 100)}%)</p>
       </div>
       {isGoalReached ? (
         <p className="px-1 mt-1 text-sm text-green-400">
