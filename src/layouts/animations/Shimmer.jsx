@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function Shimmer({ children }) {
+export default function Shimmer({ children, minHeight }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -13,7 +13,12 @@ export default function Shimmer({ children }) {
   }, []);
 
   if (isLoading) {
-    return <Skeleton className="h-full w-full rounded-md bg-gray-800" />;
+    return (
+      <Skeleton
+        style={{ minHeight: `${minHeight}px` }}
+        className="h-full w-full rounded-md bg-gray-800"
+      />
+    );
   }
 
   return children;

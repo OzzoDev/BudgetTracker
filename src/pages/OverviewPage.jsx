@@ -88,16 +88,14 @@ export default function OverviewPage() {
   }));
 
   return (
-    <div
-      style={{ gridTemplateRows: "1fr 1fr 1fr minmax(100px, auto) 400px 400px 400px" }}
-      className="flex flex-col lg:grid grid-cols-[repeat(12,1fr)] gap-8 lg:min-h-screen p-8">
+    <div className="flex flex-col lg:grid lg:grid-cols-[repeat(12,1fr)] lg:grid-rows-[repeat(3,1fr)_minmax(100px,auto)_repeat(3,400px)] gap-8 lg:min-h-screen p-8">
       <div className="col-span-9 row-span-2">
-        <Shimmer>
+        <Shimmer minHeight={325}>
           <IncomeForm />
         </Shimmer>
       </div>
-      <div className="col-span-3 row-span-3 p-8 rounded-md bg-slate-800">
-        <Shimmer>
+      <div className="hidden lg:block col-span-3 row-span-3 p-8 rounded-md lg:min-h-[845px] bg-slate-800">
+        <Shimmer minHeight={350}>
           <h2 className="text-lg text-green-400 font-medium">
             Welcome to the premier platform designed to help you track your spending and establish
             savings goals to enhance your financial well-being.
@@ -131,7 +129,7 @@ export default function OverviewPage() {
       </div>
       {hasExpenses && (
         <div className="lg:hidden grid grid-cols-[repeat(3,1fr)] gap-8 overflow-x-auto">
-          <Shimmer>
+          <Shimmer minHeight={175}>
             <SummaryCard
               value={montlySpendingsStats?.highest?.month}
               percentage={`$ ${formatNumber(montlySpendingsStats?.highest?.total)}`}
@@ -139,7 +137,7 @@ export default function OverviewPage() {
               isFavorable={false}
             />
           </Shimmer>
-          <Shimmer>
+          <Shimmer minHeight={175}>
             <SummaryCard
               value={montlySpendingsStats?.average?.month}
               percentage={`$ ${formatNumber(montlySpendingsStats?.average?.total)}`}
@@ -147,7 +145,7 @@ export default function OverviewPage() {
               isFavorable={true}
             />
           </Shimmer>
-          <Shimmer>
+          <Shimmer minHeight={175}>
             <SummaryCard
               value={montlySpendingsStats?.lowest?.month}
               percentage={`$ ${formatNumber(montlySpendingsStats?.lowest?.total)}`}
@@ -195,13 +193,13 @@ export default function OverviewPage() {
       )}
       {hasCategoires && (
         <div className="row-span-1 col-span-12">
-          <Shimmer>
+          <Shimmer minHeight={130}>
             <CategoryColorMap />
           </Shimmer>
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-1 col-span-6 flex justify-center items-center">
+        <div className="row-span-1 col-span-6 flex justify-center items-center h-[400px]">
           <Shimmer>
             <ChartCard
               headline="Expenses per category"
@@ -218,7 +216,7 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-1 col-span-6 flex justify-center items-center">
+        <div className="row-span-1 col-span-6 flex justify-center items-center h-[400px]">
           <Shimmer>
             <ChartCard
               headline="Spendings per category"
@@ -235,7 +233,7 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-1 col-span-6 flex justify-center items-center">
+        <div className="row-span-1 col-span-6 flex justify-center items-center h-[400px]">
           <Shimmer>
             <PieChartCard
               headline="Monthly spendings"
@@ -250,7 +248,7 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-1 col-span-6 flex justify-center items-center">
+        <div className="row-span-1 col-span-6 flex justify-center items-center h-[400px]">
           <Shimmer>
             <PieChartCard
               headline="Monthly savings"
@@ -265,7 +263,7 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-1 col-span-6 flex justify-center items-center">
+        <div className="row-span-1 col-span-6 flex justify-center items-center h-[400px]">
           <Shimmer>
             <TargetedBarChartCard
               headline="Savings goals"
@@ -282,7 +280,7 @@ export default function OverviewPage() {
         </div>
       )}
       {hasExpenses && (
-        <div className="row-span-1 col-span-6 flex justify-center items-center">
+        <div className="row-span-1 col-span-6 flex justify-center items-center h-[400px]">
           <Shimmer>
             <PieChartCard
               headline="Savings goals progression"
@@ -297,7 +295,8 @@ export default function OverviewPage() {
                     data.value
                   }%)`
               )}
-              labelColor="#34D399"
+              smallScreenLabels={savingsGoalsProgression.map((data) => `${data.value}%`)}
+              labelColor="#fff"
             />
           </Shimmer>
         </div>
