@@ -3,7 +3,7 @@ import SpendingsForm from "../components/spendings/SpendingsForm";
 import SpendingsRecord from "@/components/spendings/SpendingsRecord";
 import SpendingsCategroySummary from "@/components/spendings/SpendingsCategroySummary";
 import useDataStore from "@/hooks/useDataStore";
-import { formatNumber, formatWithDaySuffix } from "@/utils/helpers";
+import { expensesDayRange, formatNumber, formatWithDaySuffix } from "@/utils/helpers";
 import InfoCard from "@/components/dashboard/InfoCard";
 import { LuHandCoins } from "react-icons/lu";
 import Shimmer from "@/layouts/animations/Shimmer";
@@ -13,31 +13,12 @@ export default function SpendingsPage() {
 
   const numExpenses = expenses.length;
 
-  const sortedExpenses = [...expenses].sort(
-    (a, b) => new Date(a.spentDate) - new Date(b.spentDate)
-  );
   const totalExpenseAmount = [...expenses].reduce((acc, curr) => {
     return (acc += curr.totalAmount);
   }, 0);
 
-  const firstExpenseDate = sortedExpenses.length > 0 ? sortedExpenses[0] : null;
-  const lastExpenseDate =
-    sortedExpenses.length > 1 ? sortedExpenses[sortedExpenses.length - 1] : null;
+  const dayRange = expensesDayRange(expenses);
 
-  const expensesDayRange = () => {
-    if (sortedExpenses.length < 2) {
-      return 30;
-    }
-
-    const start = new Date(firstExpenseDate.dateSpent);
-    const end = new Date(lastExpenseDate.dateSpent);
-
-    const dayRange = (end - start) / (1000 * 60 * 60 * 24);
-
-    return dayRange;
-  };
-
-  const dayRange = expensesDayRange();
   const dailyIncome = pay / 30;
   const totalIncome = dailyIncome * dayRange;
 

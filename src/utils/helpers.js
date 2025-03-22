@@ -168,3 +168,24 @@ export function categorizeExpenses(expenses) {
     expenses,
   }));
 }
+
+export const expensesDayRange = (expenses) => {
+  if (expenses.length < 2) {
+    return 30;
+  }
+
+  const sortedExpenses = [...expenses].sort(
+    (a, b) => new Date(a.spentDate) - new Date(b.spentDate)
+  );
+
+  const firstExpenseDate = sortedExpenses.length > 0 ? sortedExpenses[0] : null;
+  const lastExpenseDate =
+    sortedExpenses.length > 1 ? sortedExpenses[sortedExpenses.length - 1] : null;
+
+  const start = new Date(firstExpenseDate.dateSpent);
+  const end = new Date(lastExpenseDate.dateSpent);
+
+  const dayRange = (end - start) / (1000 * 60 * 60 * 24);
+
+  return dayRange;
+};
