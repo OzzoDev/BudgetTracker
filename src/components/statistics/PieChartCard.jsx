@@ -1,7 +1,14 @@
 import React from "react";
 import PieChartCircle from "./PieChartCircle";
 
-export default function PieChartCard({ headline, chartData, colorMap, messages, labelColor }) {
+export default function PieChartCard({
+  headline,
+  chartData,
+  colorMap,
+  messages,
+  labelColor,
+  labels,
+}) {
   return (
     <div className="flex flex-col items-center p-8 rounded-md w-full h-full bg-slate-800 overflow-x-hidden">
       <h2 className="text-2xl text-gray-400 mb-8">{headline}</h2>
@@ -11,6 +18,7 @@ export default function PieChartCard({ headline, chartData, colorMap, messages, 
           colorMap={colorMap}
           messages={messages}
           labelColor={labelColor}
+          labels={labels}
         />
       </div>
     </div>

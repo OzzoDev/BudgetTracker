@@ -45,11 +45,14 @@ export default function OverviewPage() {
     color: category.color,
   }));
 
-  const monthlySpendingsChartData = getMonthlySpendingStats(expenses)?.monthlyStats;
+  const monthlySpendingsChartData = getMonthlySpendingStats(expenses)?.monthlyStats?.map((exp) => ({
+    name: exp.month,
+    value: exp.total,
+  }));
 
   const monthlySavingsChartData = getMonthlySpendingStats(expenses)?.monthlyStats?.map((exp) => ({
-    ...exp,
-    total: pay - exp.total,
+    name: exp.month,
+    value: pay - exp.total,
   }));
 
   const savingsGoals = [...goals]
@@ -70,6 +73,19 @@ export default function OverviewPage() {
       return progressionA - progressionB;
     })
     .reverse();
+
+  const savingsGoalsProgression = [...goals].map((goal) => ({
+    name: `$ ${formatNumber(goal.target)}`,
+    value: Math.round(
+      ((calcTotalIncome(goal, pay).totalIncome -
+        calcGoalProgression(goal, expenses, pay).totalAmount) /
+        goal.target) *
+        100
+    ),
+    amount:
+      calcTotalIncome(goal, pay).totalIncome - calcGoalProgression(goal, expenses, pay).totalAmount,
+    goal: goal,
+  }));
 
   return (
     <div
@@ -226,7 +242,7 @@ export default function OverviewPage() {
               chartData={monthlySpendingsChartData}
               colorMap={colorMap}
               messages={monthlySpendingsChartData.map(
-                (data) => `${data.month} spendings: $ ${formatNumber(data.total)}`
+                (data) => `${data.name} spendings: $ ${formatNumber(data.value)}`
               )}
               labelColor="#F87171"
             />
@@ -241,7 +257,7 @@ export default function OverviewPage() {
               chartData={monthlySavingsChartData}
               colorMap={colorMap}
               messages={monthlySavingsChartData.map(
-                (data) => `${data.month} savings: $ ${formatNumber(data.total)}`
+                (data) => `${data.name} savings: $ ${formatNumber(data.value)}`
               )}
               labelColor="#34D399"
             />
@@ -261,6 +277,27 @@ export default function OverviewPage() {
                   )} (${Math.round((data.value / data.target) * 100)}%)`
               )}
               isCountChart={false}
+            />
+          </Shimmer>
+        </div>
+      )}
+      {hasExpenses && (
+        <div className="row-span-1 col-span-6 flex justify-center items-center">
+          <Shimmer>
+            <PieChartCard
+              headline="Savings goals progression"
+              chartData={savingsGoalsProgression}
+              colorMap={colorMap}
+              messages={savingsGoalsProgression.map(
+                (data) => `${data.goal.startDate} - ${data.goal.endDate}`
+              )}
+              labels={savingsGoalsProgression.map(
+                (data) =>
+                  `$ ${formatNumber(data.amount)} / $ ${formatNumber(data.goal.target)} (${
+                    data.value
+                  }%)`
+              )}
+              labelColor="#34D399"
             />
           </Shimmer>
         </div>
