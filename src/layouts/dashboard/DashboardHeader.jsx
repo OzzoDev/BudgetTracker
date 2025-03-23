@@ -4,7 +4,8 @@ import { BiCategory } from "react-icons/bi";
 import { LuHandCoins } from "react-icons/lu";
 import { NavLink } from "react-router";
 import useDataStore from "@/hooks/useDataStore";
-import { formatNumber } from "@/utils/helpers";
+import { categorizeExpenses, formatNumber } from "@/utils/helpers";
+import ExcelDownloader from "@/components/common/ExcelDownloader";
 
 const LINKS = [
   {
@@ -30,7 +31,29 @@ const LINKS = [
 ];
 
 export default function DashboardHeader() {
-  const { pay } = useDataStore();
+  const { pay, expenses } = useDataStore();
+
+  const categorizedExpenses = [...expenses]
+    .sort((a, b) => a.spendingCategory.localeCompare(b.spendingCategory))
+    .map((exp) => ({
+      Category: exp.spendingCategory,
+      Date: exp.dateSpent,
+      Spendings: `$ ${formatNumber(exp.totalAmount)}`,
+    }));
+
+  const categorySpendings = categorizeExpenses(expenses)
+    .map((category) => ({
+      name: category.category,
+      amount: category.expenses.reduce((acc, curr) => {
+        return (acc += curr.totalAmount);
+      }, 0),
+    }))
+    .sort((a, b) => b.amount - a.amount)
+    .map((data) => ({ Category: data.name, Spendings: `$ ${formatNumber(data.amount)}` }));
+
+  const data = [...categorizedExpenses, {}, ...categorySpendings];
+
+  console.log(data);
 
   return (
     <nav className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-y-4 py-4 px-8 bg-slate-800">
@@ -40,6 +63,7 @@ export default function DashboardHeader() {
           <span className="mr-2 text-gray-300">Income</span>$ {formatNumber(pay)}
         </h2>
       </div>
+      <ExcelDownloader data={data} buttonText="Download Summary" />
       <ul className="flex gap-x-4 lg:gap-x-8">
         {LINKS.map((link, index) => {
           return (
