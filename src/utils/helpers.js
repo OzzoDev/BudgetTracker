@@ -24,7 +24,7 @@ export function capitalize(str) {
 }
 
 export function formatNumber(num) {
-  if (!num) return;
+  if (!num) return num;
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
