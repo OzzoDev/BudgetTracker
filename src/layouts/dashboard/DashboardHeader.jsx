@@ -53,8 +53,6 @@ export default function DashboardHeader() {
 
   const data = [...categorizedExpenses, {}, ...categorySpendings];
 
-  console.log(data);
-
   return (
     <nav className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-y-4 py-4 px-8 bg-slate-800">
       <div>

@@ -6,31 +6,24 @@ export default function ExcelDownloader({ data, buttonText }) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Summary");
 
-    // Use a Set to collect unique column headers
     const columnsSet = new Set();
 
-    // First pass to collect headers and prepare rows
     const rows = data.map((item) => {
       if (Object.keys(item).length > 0) {
-        // Add keys to the set for headers
         Object.keys(item).forEach((key) => columnsSet.add(key));
         return item;
       }
-      // Return a placeholder for empty objects if necessary
-      return { Placeholder: "" }; // or any other relevant data
+      return { Placeholder: "" };
     });
 
-    // Convert the Set to an array for column definitions
     const columnsArray = Array.from(columnsSet).map((key) => ({
       header: key,
       key: key,
-      width: 15, // Set width as needed
+      width: 15,
     }));
 
-    // Set the columns to the worksheet
     worksheet.columns = columnsArray;
 
-    // Add rows to the worksheet
     rows.forEach((row) => {
       worksheet.addRow(row);
     });
