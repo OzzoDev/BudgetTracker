@@ -20,7 +20,7 @@ A dynamic and interactive React dashboard project designed to enhance UX/UI skil
 
 2. **Install Dependencies:**  
    ```bash  
-   npm install  
+   npm install --legacy-peer-deps
    ```  
 
 3. **Start the Development Server:**  
