@@ -1,6 +1,6 @@
-# **ReactDashboard**  
+# **Budget Tracker**  
 
-A dynamic and interactive React dashboard project designed to enhance UX/UI skills, leveraging modern UI frameworks like **Tailwind CSS**. The project integrates **React Router** for navigation and **Redux Toolkit** for state management, allowing users to track their finances, set savings goals, and organize expenses by category.  
+Welcome to the ultimate platform for tracking your spending and achieving your savings goals! Create custom categories with unique colors to group and visualize your expenses, record transactions with dates to assess your financial habits, and set savings goals to evaluate your ability to save the desired amount based on your income and expenses. Enhance your financial well-being with our intuitive interface!  
 
 ![Project Screenshot](https://github.com/OzzoDev/BudgetTracker/blob/main/overview.png)
 
