@@ -17,7 +17,7 @@ Welcome to the ultimate platform for tracking your spending and achieving your s
 
 1. **Clone the Repository:**  
    ```bash  
-   git clone https://github.com/Team-Umea/ReactDashboard.git  
+   git clone https://github.com/OzzoDev/BudgetTracker.git  
    ```  
 
 2. **Install Dependencies:**  
